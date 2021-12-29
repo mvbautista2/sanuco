@@ -1,11 +1,22 @@
-const express = require("express");
-const cors = require("cors");
-const jwt = require("express-jwt");
-const jwks = require("jwks-rsa");
-const axios = require("axios");
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import jwt from "express-jwt";
+import jwks from "jwks-rsa";
+import path from "path";
+import axios from "axios";
+//require("dotenv").config();
+import fileUpload from "express-fileupload";
+import filesRoute from "./routes/files.route.js";
+import recipesRoute from "./routes/recipes.route.js";
+
+import config from "./config.js";
+
+import "./database.js";
 
 const app = express();
 app.use(cors());
+app.use(bodyParser.json());
 
 //Middleware
 const verifyJwt = jwt({
@@ -20,30 +31,14 @@ const verifyJwt = jwt({
   algorithms: ["RS256"],
 }).unless({ path: ["/"] });
 
+app.use(
+  fileUpload({
+    tempFileDir: "/temp",
+  })
+);
+app.use(filesRoute);
+app.use(recipesRoute);
 app.use(verifyJwt);
-
-app.get("/", (req, res) => {
-  res.send("Hello from index route");
-});
-
-app.get("/protected", async (req, res) => {
-  try {
-    const accessToken = req.headers.authorization.split(" ")[1];
-    const response = await axios.get(
-      "https://dev-diwwh35w.us.auth0.com/userinfo",
-      {
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    const userinfo = response.data;
-    console.log(userinfo);
-    res.send(userinfo);
-  } catch (error) {
-    res.send(error.message);
-  }
-});
 
 app.use((req, res, next) => {
   const error = new Error("Not found");

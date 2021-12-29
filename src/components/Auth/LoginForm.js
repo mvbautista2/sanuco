@@ -73,7 +73,7 @@ export default function LoginForm() {
           <div class="content-center">
             <div class="col-md-8 ml-auto mr-auto">
               <div class="brand">
-                <h1 class="title">Bienvenido a Sanuco</h1>
+                <h1 class="description">Bienvenido a Sanuco</h1>
                 <h3 class="description">Salud, Nutrición y Control de peso</h3>
                 <br />
                 <button
@@ -82,6 +82,7 @@ export default function LoginForm() {
                 >
                   Iniciar Sesión
                 </button>
+                
               </div>
             </div>
           </div>

@@ -36,7 +36,7 @@ function UserProfile() {
                       <FormGroup>
                         <label>Nombres</label>
                         <Input
-                          defaultValue={JSON.stringify(user.name)}
+                          defaultValue={user.given_name}
                           placeholder="Company"
                           type="text"
                         />
@@ -46,7 +46,7 @@ function UserProfile() {
                       <FormGroup>
                         <label>Apellidos</label>
                         <Input
-                           defaultValue={JSON.stringify(user.name)}
+                           defaultValue={user.family_name}
                           placeholder="Last Name"
                           type="text"
                         />
@@ -58,7 +58,7 @@ function UserProfile() {
                       <FormGroup>
                         <label>Fecha de nacimiento</label>
                         <Input
-                          defaultValue={JSON.stringify(user.birthdate)}
+                          defaultValue={user.birthdate}
                           type="date"
                         />
                       </FormGroup>
@@ -67,7 +67,7 @@ function UserProfile() {
                       <FormGroup>
                         <label>Usuario</label>
                         <Input
-                          defaultValue={JSON.stringify(user.nickname)}
+                          defaultValue={user.nickname}
                           placeholder="Username"
                           type="text"
                         />
@@ -77,7 +77,7 @@ function UserProfile() {
                       <FormGroup>
                         <label htmlFor="exampleInputEmail1">Email</label>
                         <Input
-                          defaultValue={JSON.stringify(user.email)}
+                          defaultValue={user.email}
                           placeholder="mike@email.com"
                           type="email"
                         />
@@ -89,9 +89,9 @@ function UserProfile() {
                       <FormGroup>
                         <label>Sexo</label>
                         <Input type="select">
-                          <option>Femenino</option>
-                          <option>Masculino</option>
-                          <option>Otro</option>
+                          <option>Mujer</option>
+                          <option>Hombre</option>
+                          <option>Prefiero no decirlo</option>
                         </Input>
                       </FormGroup>
                     </Col>
@@ -100,14 +100,14 @@ function UserProfile() {
                         <label>Teléfono</label>
                         <Input
                           type="number"
-                          defaultValue={JSON.stringify(user.phone_number)}
+                          defaultValue={user.phone_number}
                         />
                       </FormGroup>
                     </Col>
                     <Col className="pl-md-1" md="6">
                       <FormGroup>
                         <label>Dirección</label>
-                        <Input type="text" defaultValue={JSON.stringify(user.address)} />
+                        <Input type="text" defaultValue={user.address} />
                       </FormGroup>
                     </Col>
                   </Row>
@@ -133,25 +133,12 @@ function UserProfile() {
                     <img
                       alt="..."
                       className="avatar"
-                      src={require("assets/img/emilyz.jpg").default}
+                      src={user.picture}
                     />
-                    <h5 className="title">{JSON.stringify(user.name)}</h5>
+                    <h5 className="title">{user.name}</h5>
                   </a>
                 </div>
               </CardBody>
-              <CardFooter>
-                <div className="button-container">
-                  <Button className="btn-icon btn-round" color="facebook">
-                    <i className="fab fa-facebook" />
-                  </Button>
-                  <Button className="btn-icon btn-round" color="twitter">
-                    <i className="fab fa-twitter" />
-                  </Button>
-                  <Button className="btn-icon btn-round" color="google">
-                    <i className="fab fa-google-plus" />
-                  </Button>
-                </div>
-              </CardFooter>
             </Card>
           </Col>
         </Row>

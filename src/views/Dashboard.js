@@ -49,8 +49,8 @@ function Dashboard(props) {
               <CardHeader>
                 <Row>
                   <Col className="text-left" sm="6">
-                    <h5 className="card-category">Total Shipments</h5>
-                    <CardTitle tag="h2">Performance</CardTitle>
+                    <h5 className="card-category">Gráfica</h5>
+                    <CardTitle tag="h2">Últimos cambios</CardTitle>
                   </Col>
                   <Col sm="6">
                     <ButtonGroup
@@ -68,7 +68,7 @@ function Dashboard(props) {
                         onClick={() => setBgChartData("data1")}
                       >
                         <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                          Accounts
+                          Masa Corporal
                         </span>
                         <span className="d-block d-sm-none">
                           <i className="tim-icons icon-single-02" />
@@ -85,7 +85,7 @@ function Dashboard(props) {
                         onClick={() => setBgChartData("data2")}
                       >
                         <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                          Purchases
+                          Peso
                         </span>
                         <span className="d-block d-sm-none">
                           <i className="tim-icons icon-gift-2" />
@@ -102,7 +102,7 @@ function Dashboard(props) {
                         onClick={() => setBgChartData("data3")}
                       >
                         <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                          Sessions
+                          Estatura
                         </span>
                         <span className="d-block d-sm-none">
                           <i className="tim-icons icon-tap-02" />
@@ -127,10 +127,7 @@ function Dashboard(props) {
           <Col lg="4">
             <Card className="card-chart">
               <CardHeader>
-                <h5 className="card-category">Total Shipments</h5>
-                <CardTitle tag="h3">
-                  <i className="tim-icons icon-bell-55 text-info" /> 763,215
-                </CardTitle>
+                <h5 className="card-category">Masa Muscular</h5>                
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
@@ -145,11 +142,7 @@ function Dashboard(props) {
           <Col lg="4">
             <Card className="card-chart">
               <CardHeader>
-                <h5 className="card-category">Daily Sales</h5>
-                <CardTitle tag="h3">
-                  <i className="tim-icons icon-delivery-fast text-primary" />{" "}
-                  3,500€
-                </CardTitle>
+                <h5 className="card-category">Porcentaje de Grasa Corporal</h5>
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
@@ -164,10 +157,7 @@ function Dashboard(props) {
           <Col lg="4">
             <Card className="card-chart">
               <CardHeader>
-                <h5 className="card-category">Completed Tasks</h5>
-                <CardTitle tag="h3">
-                  <i className="tim-icons icon-send text-success" /> 12,100K
-                </CardTitle>
+                <h5 className="card-category">Frecuencia Cardíaca</h5>
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
@@ -184,8 +174,7 @@ function Dashboard(props) {
           <Col lg="6" md="12">
             <Card className="card-tasks">
               <CardHeader>
-                <h6 className="title d-inline">Tasks(5)</h6>
-                <p className="card-category d-inline"> today</p>
+                <h6 className="title d-inline">Mensajes(#)</h6>
                 <UncontrolledDropdown>
                   <DropdownToggle
                     caret
@@ -239,23 +228,7 @@ function Dashboard(props) {
                             Dwuamish Head, Seattle, WA 8:47 AM
                           </p>
                         </td>
-                        <td className="td-actions text-right">
-                          <Button
-                            color="link"
-                            id="tooltip636901683"
-                            title=""
-                            type="button"
-                          >
-                            <i className="tim-icons icon-pencil" />
-                          </Button>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip636901683"
-                            placement="right"
-                          >
-                            Edit Task
-                          </UncontrolledTooltip>
-                        </td>
+                        
                       </tr>
                       <tr>
                         <td>
@@ -281,23 +254,7 @@ function Dashboard(props) {
                             member states.
                           </p>
                         </td>
-                        <td className="td-actions text-right">
-                          <Button
-                            color="link"
-                            id="tooltip457194718"
-                            title=""
-                            type="button"
-                          >
-                            <i className="tim-icons icon-pencil" />
-                          </Button>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip457194718"
-                            placement="right"
-                          >
-                            Edit Task
-                          </UncontrolledTooltip>
-                        </td>
+                        
                       </tr>
                       <tr>
                         <td>
@@ -317,23 +274,7 @@ function Dashboard(props) {
                             more likely to shop at a company
                           </p>
                         </td>
-                        <td className="td-actions text-right">
-                          <Button
-                            color="link"
-                            id="tooltip362404923"
-                            title=""
-                            type="button"
-                          >
-                            <i className="tim-icons icon-pencil" />
-                          </Button>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip362404923"
-                            placement="right"
-                          >
-                            Edit Task
-                          </UncontrolledTooltip>
-                        </td>
+                        
                       </tr>
                       <tr>
                         <td>
@@ -352,23 +293,7 @@ function Dashboard(props) {
                             Ra Ave SW, Seattle, WA 98116, SUA 11:19 AM
                           </p>
                         </td>
-                        <td className="td-actions text-right">
-                          <Button
-                            color="link"
-                            id="tooltip818217463"
-                            title=""
-                            type="button"
-                          >
-                            <i className="tim-icons icon-pencil" />
-                          </Button>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip818217463"
-                            placement="right"
-                          >
-                            Edit Task
-                          </UncontrolledTooltip>
-                        </td>
+                        
                       </tr>
                       <tr>
                         <td>
@@ -389,23 +314,7 @@ function Dashboard(props) {
                             personal data occurs.
                           </p>
                         </td>
-                        <td className="td-actions text-right">
-                          <Button
-                            color="link"
-                            id="tooltip831835125"
-                            title=""
-                            type="button"
-                          >
-                            <i className="tim-icons icon-pencil" />
-                          </Button>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip831835125"
-                            placement="right"
-                          >
-                            Edit Task
-                          </UncontrolledTooltip>
-                        </td>
+                        
                       </tr>
                       <tr>
                         <td>
@@ -424,23 +333,7 @@ function Dashboard(props) {
                             Capitol Hill, Seattle, WA 12:34 AM
                           </p>
                         </td>
-                        <td className="td-actions text-right">
-                          <Button
-                            color="link"
-                            id="tooltip217595172"
-                            title=""
-                            type="button"
-                          >
-                            <i className="tim-icons icon-pencil" />
-                          </Button>
-                          <UncontrolledTooltip
-                            delay={0}
-                            target="tooltip217595172"
-                            placement="right"
-                          >
-                            Edit Task
-                          </UncontrolledTooltip>
-                        </td>
+                        
                       </tr>
                     </tbody>
                   </Table>

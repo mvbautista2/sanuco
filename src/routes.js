@@ -1,11 +1,8 @@
 import Dashboard from "views/Dashboard.js";
 import Icons from "views/Icons.js";
-import Map from "views/Map.js";
-import Notifications from "views/Notifications.js";
-import Rtl from "views/Rtl.js";
-import TableList from "views/TableList.js";
-import Typography from "views/Typography.js";
 import UserProfile from "views/UserProfile.js";
+import Recipes from "views/Recipes";
+import Notifications from "views/Notifications";
 
 var routes = [
   {
@@ -20,7 +17,7 @@ var routes = [
     path: "/icons",
     name: "Exámenes",
     rtlName: "الرموز",
-    icon: "tim-icons icon-atom",
+    icon: "tim-icons icon-attach-87",
     component: Icons,
     layout: "/admin",
   },
@@ -33,12 +30,26 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/rtl-support",
+    path: "/icons",
     name: "MENSAJES",
     rtlName: "ار تي ال",
-    icon: "tim-icons icon-world",
-    component: Rtl,
-    layout: "/rtl",
+    icon: "tim-icons icon-email-85",
+    component: Icons,
+    layout: "/admin",
   },
+  {
+    path: "/icons",
+    name: "ANTECEDENTES",
+    rtlName: "ار تي ال",
+    icon: "tim-icons icon-notes",
+    component: Icons,
+    layout: "/admin",
+  },
+  {
+    path: "/recipes",
+    component: Notifications,
+    layout: "/admin",
+  },
+  
 ];
 export default routes;

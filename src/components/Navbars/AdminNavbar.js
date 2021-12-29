@@ -1,21 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { Route, Switch } from "react-router-dom";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useHistory, useLocation } from "react-router-dom";
 
 // reactstrap components
 import {
   Button,
   Collapse,
   DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
   UncontrolledDropdown,
   Input,
   InputGroup,
   NavbarBrand,
   Navbar,
-  NavLink,
   Nav,
   Container,
   Modal,
@@ -23,10 +22,19 @@ import {
   ModalHeader,
 } from "reactstrap";
 
+import Recipes from "../../views/Recipes";
+import RecipeDetail from "../../views/RecipeDetail";
+import Notifications from "views/Notifications";
+
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
+  const query = useQuery();
+  const history = useHistory();
+  const page = query.get("page") || 1;
+  const searchQuery = query.get("searchQuery");
+  const [search, setSearch] = useState("");
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
     // Specify how to clean up after this effect:
@@ -34,6 +42,11 @@ function AdminNavbar(props) {
       window.removeEventListener("resize", updateColor);
     };
   });
+
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+
   // function that adds color white/transparent to the navbar on resize (this is for the collapse)
   const updateColor = () => {
     if (window.innerWidth < 993 && collapseOpen) {
@@ -56,8 +69,17 @@ function AdminNavbar(props) {
     setmodalSearch(!modalSearch);
   };
   const { logout, user } = useAuth0();
+
+
   return (
     <>
+      <Switch>
+        <Route
+          path="/admin/recipes/recipes/search/:ingredient"
+          component={Notifications}
+        />
+        <Route path="/admin/recipes/recipes/:id" component={RecipeDetail} />
+      </Switch>
       <Navbar className={classNames("navbar-absolute", color)} expand="lg">
         <Container fluid>
           <div className="navbar-wrapper">
@@ -89,45 +111,7 @@ function AdminNavbar(props) {
                   <span className="d-lg-none d-md-block">Search</span>
                 </Button>
               </InputGroup>
-              <UncontrolledDropdown nav>
-                <DropdownToggle
-                  caret
-                  color="default"
-                  data-toggle="dropdown"
-                  nav
-                >
-                  <div className="notification d-none d-lg-block d-xl-block" />
-                  <i className="tim-icons icon-sound-wave" />
-                  <p className="d-lg-none">Notifications</p>
-                </DropdownToggle>
-                <DropdownMenu className="dropdown-navbar" right tag="ul">
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">
-                      Mike John responded to your email
-                    </DropdownItem>
-                  </NavLink>
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">
-                      You have 5 more tasks
-                    </DropdownItem>
-                  </NavLink>
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">
-                      Your friend Michael is in town
-                    </DropdownItem>
-                  </NavLink>
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">
-                      Another notification
-                    </DropdownItem>
-                  </NavLink>
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">
-                      Another one
-                    </DropdownItem>
-                  </NavLink>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+
               <UncontrolledDropdown nav>
                 <DropdownToggle
                   caret
@@ -136,26 +120,16 @@ function AdminNavbar(props) {
                   onClick={(e) => e.preventDefault()}
                 >
                   <div className="photo">
-                    <img
-                      alt="..."
-                      src={require("assets/img/anime3.png").default}
-                    />
+                    <img alt="..." src={user.picture} />
                   </div>
                   <b className="caret d-none d-lg-block d-xl-block" />
-                  <button  class="btn btn-primary btn-round btn-" onClick={logout}>Log out</button>
+                  <button
+                    class="btn btn-primary btn-round btn-"
+                    onClick={logout}
+                  >
+                    Cerrar Sesión
+                  </button>
                 </DropdownToggle>
-                <DropdownMenu className="dropdown-navbar" right tag="ul">
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Profile</DropdownItem>
-                  </NavLink>
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Settings</DropdownItem>
-                  </NavLink>
-                  <DropdownItem divider tag="li" />
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Log out</DropdownItem>
-                  </NavLink>
-                </DropdownMenu>
               </UncontrolledDropdown>
               <li className="separator d-lg-none" />
             </Nav>
@@ -168,13 +142,20 @@ function AdminNavbar(props) {
         toggle={toggleModalSearch}
       >
         <ModalHeader>
-          <Input placeholder="SEARCH" type="text" />
+          <Input
+            placeholder="SEARCH"
+            value={search}
+            type="text"
+            onChange={(e) => setSearch(e.target.value)}
+          />
           <button
             aria-label="Close"
             className="close"
-            onClick={toggleModalSearch}
+            onClick={() =>
+              history.push(`/admin/recipes/recipes/search/${search}`)
+            }
           >
-            <i className="tim-icons icon-simple-remove" />
+            <i className="tim-icons icon-zoom-split" />
           </button>
         </ModalHeader>
       </Modal>
