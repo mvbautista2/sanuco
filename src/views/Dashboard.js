@@ -40,6 +40,12 @@ function Dashboard(props) {
   const setBgChartData = (name) => {
     setbigChartData(name);
   };
+
+  
+
+  const addSign = async(e) =>{
+    e.preventDefault()
+  }
   return (
     <>
       <div className="content">
@@ -347,7 +353,7 @@ function Dashboard(props) {
                 <CardTitle tag="h4">Últimos signos vitales</CardTitle>
               </CardHeader>
               <CardBody>
-                <Form>
+                <Form onSubmit={addSign}>
                   <Row>
                     <Col className="pr-md-1" md="3">
                       <FormGroup>

@@ -1,7 +1,8 @@
 import Dashboard from "views/Dashboard.js";
 import Icons from "views/Icons.js";
 import UserProfile from "views/UserProfile.js";
-import Recipes from "views/Recipes";
+import UserRecord from "views/UserRecord";
+import Messages from "views/Messages";
 import Notifications from "views/Notifications";
 
 var routes = [
@@ -30,19 +31,19 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/icons",
+    path: "/messages",
     name: "MENSAJES",
     rtlName: "ار تي ال",
     icon: "tim-icons icon-email-85",
-    component: Icons,
+    component: Messages,
     layout: "/admin",
   },
   {
-    path: "/icons",
+    path: "/record",
     name: "ANTECEDENTES",
     rtlName: "ار تي ال",
     icon: "tim-icons icon-notes",
-    component: Icons,
+    component: UserRecord,
     layout: "/admin",
   },
   {
@@ -50,6 +51,5 @@ var routes = [
     component: Notifications,
     layout: "/admin",
   },
-  
 ];
 export default routes;

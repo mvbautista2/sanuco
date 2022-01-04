@@ -9,6 +9,7 @@ import axios from "axios";
 import fileUpload from "express-fileupload";
 import filesRoute from "./routes/files.route.js";
 import recipesRoute from "./routes/recipes.route.js";
+import vitalSignsRoute from "./routes/vitalSigns.route.js";
 
 import config from "./config.js";
 
@@ -38,7 +39,8 @@ app.use(
 );
 app.use(filesRoute);
 app.use(recipesRoute);
-app.use(verifyJwt);
+app.use(vitalSignsRoute);
+//app.use(verifyJwt);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
