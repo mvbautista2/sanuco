@@ -48,6 +48,13 @@ var routes = [
   },
   {
     path: "/recipes",
+    name: "RECETAS",
+    icon: "tim-icons icon-book-bookmark",
+    component: Notifications,
+    layout: "/admin",
+  },
+  {
+    path: "/recipes",
     component: Notifications,
     layout: "/admin",
   },

@@ -75,6 +75,8 @@ export default function LoginForm() {
               <div class="brand">
                 <h1 class="description">Bienvenido a Sanuco</h1>
                 <h3 class="description">Salud, Nutrición y Control de peso</h3>
+                <h4 class="description">Somos Sanuco, un sitio web que te ayudará a tener un control de tu salud a través de un autodiagnóstico de tu
+                peso y el acompañamiento de un nutricionista</h4>
                 <br />
                 <button
                   onClick={loginWithPopup}

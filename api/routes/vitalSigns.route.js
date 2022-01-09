@@ -10,8 +10,8 @@ router.post("/api/vitalSigns/createnew", async (req, res) => {
     peso,
     masaCorporal,
     temperatura,
-    freCardiaca,
-    freRespiratoria,
+    frecuenciaCardiaca,
+    frecuenciaRespiratoria,
     sistolica,
     diastolica,
     porcentajeGrasaCorporal,
@@ -25,8 +25,8 @@ router.post("/api/vitalSigns/createnew", async (req, res) => {
       peso,
       masaCorporal,
       temperatura,
-      frecuenciaCardiaca: freCardiaca,
-      frecuenciaRespiratoria: freRespiratoria,
+      frecuenciaCardiaca,
+      frecuenciaRespiratoria,
       sistolica,
       diastolica,
       porcentajeGrasaCorporal,
@@ -49,8 +49,15 @@ router.get("/api/vitalSigns", async (req, res) => {
 });
 
 router.get("/api/vitalSigns/lastDate/:user", async (req, res) => {
-  const lastSigns = await VitalSign.find({user: req.params.user}).sort({$natural:-1}).limit(1);;
+  const lastSigns = await VitalSign.find({ user: req.params.user })
+    .sort({ $natural: -1 })
+    .limit(1);
   return res.json(lastSigns);
+});
+
+router.get("/api/vitalSigns/:user", async (req, res) => {
+  const signsUser = await VitalSign.find({ user: req.params.user });
+  return res.json(signsUser);
 });
 
 export default router;

@@ -70,13 +70,12 @@ function AdminNavbar(props) {
   };
   const { logout, user } = useAuth0();
 
-
   return (
     <>
       <Switch>
         <Route
           path="/admin/recipes/recipes/search/:ingredient"
-          component={Notifications}
+          component={Recipes}
         />
         <Route path="/admin/recipes/recipes/:id" component={RecipeDetail} />
       </Switch>

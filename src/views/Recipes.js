@@ -21,28 +21,30 @@ const Recipes = () => {
 
   return (
     <>
-      <div className="row p-5">
-        {recipes.map((recipe) => (
-          <div className="col-md-3 ">
-            <div
-              className="card bg-secondary"
-              onClick={() =>
-                history.push(`/admin/recipes/recipes/${recipe._id}`)
-              }
-              key={recipe._id}
-              type="submit"
-            >
-              <img
-                src={recipe.image}
-                alt={recipe.title}
-                className="card-img-top"
-              />
-              <div className="card-body">
-                <h3>{recipe.title}</h3>
+      <div className="content">
+        <Row >
+          {recipes.map((recipe) => (
+            <div className="col-md-4 p-4">
+              <div
+                className="card bg-secondary"
+                onClick={() =>
+                  history.push(`/admin/recipes/recipes/${recipe._id}`)
+                }
+                key={recipe._id}
+                type="submit"
+              >
+                <img
+                  src={recipe.image}
+                  alt={recipe.title}
+                  className="card-img-top"
+                />
+                <div className="card-body">
+                  <h3>{recipe.title}</h3>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </Row>
       </div>
 
       {/* <div className="card">

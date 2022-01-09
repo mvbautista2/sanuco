@@ -62,7 +62,91 @@ function Notifications() {
   return (
     <>
       <div className="content">
-        <Recipes/>
+        {/* <Recipes/> */}
+        <Row>
+        <Col md="12">
+            <Card>
+              <CardBody>
+                <div className="places-buttons">
+                  <Row>
+                    <Col className="ml-auto mr-auto text-center" md="6">
+                      <CardTitle tag="h4">
+                        Recetas Saludables
+                        <p className="category">Escoge el tipo de receta que deseas buscar</p>
+                      </CardTitle>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="ml-auto mr-auto" lg="8">
+                      <Row>
+                        <Col md="4">
+                          <Button
+                            block
+                            color="primary"
+                            //onClick={}
+                          >
+                            Ensaladas
+                          </Button>
+                        </Col>
+                        <Col md="4">
+                          <Button
+                            block
+                            color="primary"
+                            //onClick={}
+                          >
+                            Jugos
+                          </Button>
+                        </Col>
+                        <Col md="4">
+                          <Button
+                            block
+                            color="primary"
+                            //onClick={}
+                          >
+                            Refrigerios
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="ml-auto mr-auto" lg="8">
+                      <Row>
+                        <Col md="4">
+                          <Button
+                            block
+                            color="primary"
+                           // onClick={}
+                          >
+                            Postres
+                          </Button>
+                        </Col>
+                        <Col md="4">
+                          <Button
+                            block
+                            color="primary"
+                            //onClick={}
+                          >
+                            Almuerzos y cenas
+                          </Button>
+                        </Col>
+                        <Col md="4">
+                          <Button
+                            block
+                            color="primary"
+                           //onClick={}
+                          >
+                            Desayunos
+                          </Button>
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
       </div>
     </>
   );

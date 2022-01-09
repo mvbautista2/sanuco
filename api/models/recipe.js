@@ -10,6 +10,7 @@ const RecipeSchema = new Schema({
   time: String,
   info: [],
   ingredient: String,
+  video: String,
 });
 
 export default model("Recipe", RecipeSchema);
