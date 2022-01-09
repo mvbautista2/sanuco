@@ -6,31 +6,21 @@ const router = Router();
 
 router.post("/api/vitalSigns/createnew", async (req, res) => {
   const {
-    estatura,
-    peso,
-    masaCorporal,
     temperatura,
     frecuenciaCardiaca,
     frecuenciaRespiratoria,
     sistolica,
     diastolica,
-    porcentajeGrasaCorporal,
-    masaMuscular,
     saturacionOxigeno,
   } = req.body;
 
   try {
     const sign2 = new VitalSign({
-      estatura,
-      peso,
-      masaCorporal,
       temperatura,
       frecuenciaCardiaca,
       frecuenciaRespiratoria,
       sistolica,
       diastolica,
-      porcentajeGrasaCorporal,
-      masaMuscular,
       saturacionOxigeno,
       user: req.body.user,
     });

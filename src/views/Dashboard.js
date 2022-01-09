@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
-import Moment from "moment";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
@@ -40,29 +39,38 @@ function Dashboard(props) {
   };
 
   const [signs, setSigns] = useState([]);
+  const [antros, setAntros] = useState([]);
 
   useEffect(async () => {
     const res = await axios.get(
+      `http://localhost:4000/api/antropometric/${user.email}`
+    );
+    setAntros(res.data);
+  }, [antros]);
+
+  useEffect(async () => {
+    const res1 = await axios.get(
       `http://localhost:4000/api/vitalSigns/${user.email}`
     );
-    setSigns(res.data);
+    setSigns(res1.data);
   }, [signs]);
 
-  const createdAt = [];
+  const createdAtA = [];
   const masa = [];
   const pes = [];
   const est = [];
-  const masaMus = [];
-  const grasaCor = [];
-  const freCard = [];
-  signs.forEach((element) => {
-    createdAt.push(element.createdAt);
+  const cintu = [];
+  const cade = [];
+  const cinturaCade = [];
+
+  antros.forEach((element) => {
+    createdAtA.push(element.createdAt);
     masa.push(element.masaCorporal);
     pes.push(element.peso);
     est.push(element.estatura);
-    masaMus.push(element.masaMuscular);
-    grasaCor.push(element.porcentajeGrasaCorporal);
-    freCard.push(element.frecuenciaCardiaca);
+    cintu.push(element.cintura);
+    cade.push(element.cadera);
+    cinturaCade.push(element.cinturaCadera);
   });
 
   const chart1_2_options = {
@@ -126,7 +134,7 @@ function Dashboard(props) {
       gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
       return {
-        labels: createdAt,
+        labels: createdAtA,
         datasets: [
           {
             label: "Masa Corporal",
@@ -158,7 +166,7 @@ function Dashboard(props) {
       gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
       return {
-        labels: createdAt,
+        labels: createdAtA,
         datasets: [
           {
             label: "Peso",
@@ -190,10 +198,10 @@ function Dashboard(props) {
       gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
       return {
-        labels: createdAt,
+        labels: createdAtA,
         datasets: [
           {
-            label: "Estatura",
+            label: "ICC",
             fill: true,
             backgroundColor: gradientStroke,
             borderColor: "#1f8ef1",
@@ -207,7 +215,7 @@ function Dashboard(props) {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: est,
+            data: cinturaCade,
           },
         ],
       };
@@ -226,10 +234,10 @@ function Dashboard(props) {
       gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
 
       return {
-        labels: createdAt,
+        labels: createdAtA,
         datasets: [
           {
-            label: "Masa Muscular",
+            label: "Cadera",
             fill: true,
             backgroundColor: gradientStroke,
             borderColor: "#1f8ef1",
@@ -243,7 +251,7 @@ function Dashboard(props) {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: masaMus,
+            data: cade,
           },
         ],
       };
@@ -262,10 +270,10 @@ function Dashboard(props) {
       gradientStroke.addColorStop(0, "rgba(119,52,169,0)"); //purple colors
 
       return {
-        labels: createdAt,
+        labels: createdAtA,
         datasets: [
           {
-            label: "Grasa Corporal",
+            label: "Cintura",
             fill: true,
             backgroundColor: gradientStroke,
             hoverBackgroundColor: gradientStroke,
@@ -273,7 +281,7 @@ function Dashboard(props) {
             borderWidth: 2,
             borderDash: [],
             borderDashOffset: 0.0,
-            data: grasaCor,
+            data: cintu,
           },
         ],
       };
@@ -337,10 +345,10 @@ function Dashboard(props) {
       gradientStroke.addColorStop(0, "rgba(66,134,121,0)"); //green colors
 
       return {
-        labels: createdAt,
+        labels: createdAtA,
         datasets: [
           {
-            label: "Frecuencia Cardiaca",
+            label: "Estatura",
             fill: true,
             backgroundColor: gradientStroke,
             borderColor: "#00d6b4",
@@ -354,7 +362,7 @@ function Dashboard(props) {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: freCard,
+            data: est,
           },
         ],
       };
@@ -412,27 +420,36 @@ function Dashboard(props) {
     },
   };
 
-  const [estatura, setEstatura] = useState("");
-  const [peso, setPeso] = useState("");
-  const [masaCorporal, setMasaCorporal] = useState("");
-  const [temperatura, setTemperatura] = useState("");
-  const [frecuenciaCardiaca, setFrecuenciaCardiaca] = useState("");
-  const [frecuenciaRespiratoria, setFrecuenciaRespiratoria] = useState("");
-  const [sistolica, setSistolica] = useState("");
-  const [diastolica, setDiastolica] = useState("");
-  const [porcentajeGrasaCorporal, setPorcentajeGrasaCorporal] = useState("");
-  const [masaMuscular, setMasaMuscular] = useState("");
-  const [saturacionOxigeno, setSaturacionOxigeno] = useState("");
-  const [vitalSigns, setVitalSigns] = useState([]);
+  const [lastSigns, setLastSigns] = useState([]);
+  const [lastAntro, setLastAntro] = useState([]);
   const { user } = useAuth0();
 
   useEffect(async () => {
     const res = await axios.get(
       `http://localhost:4000/api/vitalSigns/lastDate/${user.email}`
     );
-    console.log(res.data[0]);
-    setVitalSigns(res.data[0]);
-  }, [vitalSigns]);
+
+    setLastSigns(res.data[0]);
+  }, [lastSigns]);
+
+  useEffect(async () => {
+    const res1 = await axios.get(
+      `http://localhost:4000/api/antropometric/lastDate/${user.email}`
+    );
+    setLastAntro(res1.data[0]);
+  }, [lastAntro]);
+
+  const [estatura, setEstatura] = useState("");
+
+  const [peso, setPeso] = useState("");
+  const [temperatura, setTemperatura] = useState("");
+  const [frecuenciaCardiaca, setFrecuenciaCardiaca] = useState("");
+  const [frecuenciaRespiratoria, setFrecuenciaRespiratoria] = useState("");
+  const [sistolica, setSistolica] = useState("");
+  const [diastolica, setDiastolica] = useState("");
+  const [cadera, setCadera] = useState("");
+  const [cintura, setCintura] = useState("");
+  const [saturacionOxigeno, setSaturacionOxigeno] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -440,14 +457,31 @@ function Dashboard(props) {
 
     formData.append("estatura", estatura);
     formData.append("peso", peso);
-    formData.append("masaCorporal", masaCorporal);
+    formData.append("cadera", cadera);
+    formData.append("cintura", cintura);
+    formData.append("user", user.email);
+
+    const res = await axios.post(
+      "http://localhost:4000/api/antropometric/createnew",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    console.log(res);
+  };
+
+  const handleSubmit1 = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
     formData.append("temperatura", temperatura);
     formData.append("frecuenciaCardiaca", frecuenciaCardiaca);
     formData.append("frecuenciaRespiratoria", frecuenciaRespiratoria);
     formData.append("sistolica", sistolica);
     formData.append("diastolica", diastolica);
-    formData.append("porcentajeGrasaCorporal", porcentajeGrasaCorporal);
-    formData.append("masaMuscular", masaMuscular);
     formData.append("saturacionOxigeno", saturacionOxigeno);
     formData.append("user", user.email);
 
@@ -525,7 +559,7 @@ function Dashboard(props) {
                         onClick={() => setBgChartData("data3")}
                       >
                         <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                          Estatura
+                          ICC
                         </span>
                         <span className="d-block d-sm-none">
                           <i className="tim-icons icon-tap-02" />
@@ -550,7 +584,7 @@ function Dashboard(props) {
           <Col lg="4">
             <Card className="card-chart">
               <CardHeader>
-                <h5 className="card-category">Masa Muscular</h5>
+                <h5 className="card-category">Cadera</h5>
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
@@ -565,7 +599,7 @@ function Dashboard(props) {
           <Col lg="4">
             <Card className="card-chart">
               <CardHeader>
-                <h5 className="card-category">Porcentaje de Grasa Corporal</h5>
+                <h5 className="card-category">Cintura</h5>
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
@@ -580,7 +614,7 @@ function Dashboard(props) {
           <Col lg="4">
             <Card className="card-chart">
               <CardHeader>
-                <h5 className="card-category">Frecuencia Cardíaca</h5>
+                <h5 className="card-category">Estatura</h5>
               </CardHeader>
               <CardBody>
                 <div className="chart-area">
@@ -594,6 +628,224 @@ function Dashboard(props) {
           </Col>
         </Row>
         <Row>
+          <Col lg="6" md="12">
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h4">Últimos signos antropométricos</CardTitle>
+              </CardHeader>
+              <form onSubmit={handleSubmit}>
+                <CardBody>
+                  <Row>
+                    <Col className="pr-md-1" md="3">
+                      <FormGroup>
+                        <label>Estatura</label>
+                        <Input
+                          defaultValue={
+                            size(antros) === 0 ? "" : lastAntro.estatura
+                          }
+                          // defaultValue={lastAntro.estatura}
+                          placeholder="m"
+                          type="number"
+                          step="0.01"
+                          onChange={(e) => setEstatura(e.target.value)}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="3">
+                      <FormGroup>
+                        <label>Peso</label>
+                        <Input
+                          defaultValue={
+                            size(antros) === 0 ? "" : lastAntro.peso
+                          }
+                          placeholder="kg"
+                          type="number"
+                          step="0.01"
+                          onChange={(e) => setPeso(e.target.value)}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>Índice de Masa Corporal</label>
+                        <Input
+                          disabled
+                          defaultValue={
+                            size(antros) === 0 ? "" : lastAntro.masaCorporal
+                          }
+                          type="number"
+                          placeholder="kg/m2"
+                          step="0.01"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="3">
+                      <FormGroup>
+                        <label>Cintura</label>
+                        <Input
+                          defaultValue={
+                            size(antros) === 0 ? "" : lastAntro.cintura
+                          }
+                          placeholder="cm"
+                          type="number"
+                          step="0.01"
+                          onChange={(e) => setCintura(e.target.value)}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="3">
+                      <FormGroup>
+                        <label>Cadera</label>
+                        <Input
+                          defaultValue={
+                            size(antros) === 0 ? "" : lastAntro.cadera
+                          }
+                          placeholder="cm"
+                          type="number"
+                          onChange={(e) => setCadera(e.target.value)}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>Índice Cintura Cadera</label>
+                        <Input
+                          disabled
+                          defaultValue={
+                            size(antros) === 0 ? "" : lastAntro.cinturaCadera
+                          }
+                          type="number"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="6">
+                      <FormGroup>
+                        <label>Con estas medidas me siento</label>
+                        <Input type="select">
+                          <option>Feliz</option>
+                          <option>Triste</option>
+                        </Input>
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </CardBody>
+
+                <CardFooter>
+                  <Button className="btn-fill" color="primary" type="submit">
+                    Guardar
+                  </Button>
+                </CardFooter>
+              </form>
+            </Card>
+          </Col>
+
+          <Col lg="6" md="12">
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h4">Últimos signos vitales</CardTitle>
+              </CardHeader>
+              <form onSubmit={handleSubmit1}>
+                <CardBody>
+                  <Row>
+                    <Col className="pr-md-1" md="3">
+                      <FormGroup>
+                        <label>Temperatura</label>
+                        <Input
+                          defaultValue={
+                            size(signs) === 0 ? "" : lastSigns.temperatura
+                          }
+                          placeholder="ºC"
+                          type="number"
+                          step="0.01"
+                          onChange={(e) => setTemperatura(e.target.value)}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="4">
+                      <FormGroup>
+                        <label>Frecuencia Cardiaca</label>
+                        <Input
+                          defaultValue={
+                            size(signs) === 0
+                              ? ""
+                              : lastSigns.frecuenciaCardiaca
+                          }
+                          placeholder="Latidos por minuto"
+                          type="number"
+                          onChange={(e) =>
+                            setFrecuenciaCardiaca(e.target.value)
+                          }
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="4">
+                      <FormGroup>
+                        <label>Frecuencia Respiratoria</label>
+                        <Input
+                          defaultValue={
+                            size(signs) === 0
+                              ? ""
+                              : lastSigns.frecuenciaRespiratoria
+                          }
+                          placeholder="Respiraciones por minuto"
+                          type="number"
+                          onChange={(e) =>
+                            setFrecuenciaRespiratoria(e.target.value)
+                          }
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="3">
+                      <FormGroup>
+                        <label>Sistólica</label>
+                        <Input
+                          defaultValue={
+                            size(signs) === 0 ? "" : lastSigns.sistolica
+                          }
+                          placeholder="mmHg"
+                          type="number"
+                          onChange={(e) => setSistolica(e.target.value)}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pr-md-1" md="3">
+                      <FormGroup>
+                        <label>Diastólica</label>
+                        <Input
+                          defaultValue={
+                            size(signs) === 0 ? "" : lastSigns.diastolica
+                          }
+                          placeholder="mmHg"
+                          type="number"
+                          onChange={(e) => setDiastolica(e.target.value)}
+                        />
+                      </FormGroup>
+                    </Col>
+
+                    <Col className="pr-md-1" md="5">
+                      <FormGroup>
+                        <label>Saturación de oxígeno</label>
+                        <Input
+                          defaultValue={
+                            size(signs) === 0 ? "" : lastSigns.saturacionOxigeno
+                          }
+                          placeholder="00"
+                          type="number  "
+                          onChange={(e) => setSaturacionOxigeno(e.target.value)}
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </CardBody>
+
+                <CardFooter>
+                  <Button className="btn-fill" color="primary" type="submit">
+                    Guardar
+                  </Button>
+                </CardFooter>
+              </form>
+            </Card>
+          </Col>
           <Col lg="6" md="12">
             <Card className="card-tasks">
               <CardHeader>
@@ -756,156 +1008,6 @@ function Dashboard(props) {
                   </Table>
                 </div>
               </CardBody>
-            </Card>
-          </Col>
-          <Col lg="6" md="12">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h4">Últimos signos vitales</CardTitle>
-              </CardHeader>
-              <form onSubmit={handleSubmit}>
-                <CardBody>
-                  <Row>
-                    <Col className="pr-md-1" md="3">
-                      <FormGroup>
-                        <label>Estatura</label>
-                        <Input
-                          defaultValue={vitalSigns.estatura}
-                          placeholder="m"
-                          type="number"
-                          step="0.01"
-                          onChange={(e) => setEstatura(e.target.value)}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-md-1" md="3">
-                      <FormGroup>
-                        <label>Peso</label>
-                        <Input
-                          defaultValue={vitalSigns.peso}
-                          placeholder="kg"
-                          type="number"
-                          step="0.01"
-                          onChange={(e) => setPeso(e.target.value)}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-md-1" md="3">
-                      <FormGroup>
-                        <label>Masa Corporal</label>
-                        <Input
-                          defaultValue={vitalSigns.masaCorporal}
-                          type="number"
-                          placeholder="kg/m2"
-                          step="0.01"
-                          onChange={(e) => setMasaCorporal(e.target.value)}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-md-1" md="3">
-                      <FormGroup>
-                        <label>Temperatura</label>
-                        <Input
-                          defaultValue={vitalSigns.temperatura}
-                          placeholder="ºC"
-                          type="number"
-                          step="0.01"
-                          onChange={(e) => setTemperatura(e.target.value)}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-md-1" md="6">
-                      <FormGroup>
-                        <label>Frecuencia Cardiaca</label>
-                        <Input
-                          defaultValue={vitalSigns.frecuenciaCardiaca}
-                          placeholder="Latidos por minuto"
-                          type="number"
-                          onChange={(e) =>
-                            setFrecuenciaCardiaca(e.target.value)
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-md-1" md="6">
-                      <FormGroup>
-                        <label>Frecuencia Respiratoria</label>
-                        <Input
-                          defaultValue={vitalSigns.frecuenciaRespiratoria}
-                          placeholder="Respiraciones por minuto"
-                          type="number"
-                          onChange={(e) =>
-                            setFrecuenciaRespiratoria(e.target.value)
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-md-1" md="3">
-                      <FormGroup>
-                        <label>Sistólica</label>
-                        <Input
-                          defaultValue={vitalSigns.sistolica}
-                          placeholder="mmHg"
-                          type="number"
-                          onChange={(e) => setSistolica(e.target.value)}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-md-1" md="3">
-                      <FormGroup>
-                        <label>Diastólica</label>
-                        <Input
-                          defaultValue={vitalSigns.diastolica}
-                          placeholder="mmHg"
-                          type="number"
-                          onChange={(e) => setDiastolica(e.target.value)}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-md-1" md="6">
-                      <FormGroup>
-                        <label>Porcentaje de grasa corporal</label>
-                        <Input
-                          defaultValue={vitalSigns.porcentajeGrasaCorporal}
-                          placeholder="%"
-                          type="number"
-                          onChange={(e) =>
-                            setPorcentajeGrasaCorporal(e.target.value)
-                          }
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-md-1" md="3">
-                      <FormGroup>
-                        <label>Masa muscular</label>
-                        <Input
-                          defaultValue={vitalSigns.masaMuscular}
-                          placeholder="%"
-                          type="number"
-                          onChange={(e) => setMasaMuscular(e.target.value)}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pr-md-1" md="5">
-                      <FormGroup>
-                        <label>Saturación de oxígeno</label>
-                        <Input
-                          defaultValue={vitalSigns.saturacionOxigeno}
-                          placeholder="00"
-                          type="number  "
-                          onChange={(e) => setSaturacionOxigeno(e.target.value)}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </CardBody>
-
-                <CardFooter>
-                  <Button className="btn-fill" color="primary" type="submit">
-                    Guardar
-                  </Button>
-                </CardFooter>
-              </form>
             </Card>
           </Col>
         </Row>

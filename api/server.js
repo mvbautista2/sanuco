@@ -10,6 +10,7 @@ import fileUpload from "express-fileupload";
 import filesRoute from "./routes/files.route.js";
 import recipesRoute from "./routes/recipes.route.js";
 import vitalSignsRoute from "./routes/vitalSigns.route.js";
+import antropometricRoute from "./routes/antropometric.route.js";
 
 import config from "./config.js";
 
@@ -40,6 +41,7 @@ app.use(
 app.use(filesRoute);
 app.use(recipesRoute);
 app.use(vitalSignsRoute);
+app.use(antropometricRoute);
 //app.use(verifyJwt);
 
 app.use((req, res, next) => {
