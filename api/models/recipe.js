@@ -10,6 +10,7 @@ const RecipeSchema = new Schema({
   time: String,
   info: [],
   ingredient: String,
+  category: String,
   video: String,
 });
 

@@ -10,6 +10,7 @@ const AntropometricSchema = new Schema(
     cintura: Number,
     cadera: Number,
     cinturaCadera: Number,
+    sentimiento: String,
     user: String,
   },
   {

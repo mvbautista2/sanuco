@@ -75,9 +75,9 @@ function AdminNavbar(props) {
       <Switch>
         <Route
           path="/admin/recipes/recipes/search/:ingredient"
-          component={Recipes}
+          component={Recipes} exact
         />
-        <Route path="/admin/recipes/recipes/:id" component={RecipeDetail} />
+        <Route path="/admin/recipes/recipes/:id" component={RecipeDetail} exact/>
       </Switch>
       <Navbar className={classNames("navbar-absolute", color)} expand="lg">
         <Container fluid>

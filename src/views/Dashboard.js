@@ -440,8 +440,8 @@ function Dashboard(props) {
   }, [lastAntro]);
 
   const [estatura, setEstatura] = useState("");
-
   const [peso, setPeso] = useState("");
+  const [sentimiento, setSentimiento] = useState("");
   const [temperatura, setTemperatura] = useState("");
   const [frecuenciaCardiaca, setFrecuenciaCardiaca] = useState("");
   const [frecuenciaRespiratoria, setFrecuenciaRespiratoria] = useState("");
@@ -459,6 +459,7 @@ function Dashboard(props) {
     formData.append("peso", peso);
     formData.append("cadera", cadera);
     formData.append("cintura", cintura);
+    formData.append("sentimiento", sentimiento);
     formData.append("user", user.email);
 
     const res = await axios.post(
@@ -721,7 +722,13 @@ function Dashboard(props) {
                     <Col className="pr-md-1" md="6">
                       <FormGroup>
                         <label>Con estas medidas me siento</label>
-                        <Input type="select">
+                        <Input
+                          type="select"
+                          value={sentimiento}
+                          onChange={(e) =>
+                            setSentimiento(e.currentTarget.value)
+                          }
+                        >
                           <option>Feliz</option>
                           <option>Triste</option>
                         </Input>

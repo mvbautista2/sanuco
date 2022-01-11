@@ -5,7 +5,7 @@ import Antropometric from "../models/antropometric.js";
 const router = Router();
 
 router.post("/api/antropometric/createnew", async (req, res) => {
-  const { estatura, peso, cintura, cadera } = req.body;
+  const { estatura, peso, cintura, cadera, sentimiento } = req.body;
   const masaCorporal = (peso / (estatura * estatura)).toFixed(1);
   const cinturaCadera = (cintura / cadera).toFixed(1);
 
@@ -17,6 +17,7 @@ router.post("/api/antropometric/createnew", async (req, res) => {
       cintura,
       cadera,
       cinturaCadera,
+      sentimiento,
       user: req.body.user,
     });
 
