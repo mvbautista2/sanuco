@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { size } from "lodash";
 
-import { useAuth0 } from "@auth0/auth0-react";
-
 import {
   Button,
   UncontrolledTooltip,
@@ -12,14 +10,28 @@ import {
 
 const Files = () => {
   const [files, setFiles] = useState([]);
-  const { user } = useAuth0();
+  const [userRole, setUserRole] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(async () => {
-    const res = await axios.get(
-      `http://localhost:4000/api/files/${user.email}`
-    );
+    const res = await axios.get(`http://localhost:4000/api/files/${user}`);
     setFiles(res.data);
   }, [files]);
+
+  useEffect(() => {
+    const email = window.localStorage.getItem("UserFound");
+    if (email) {
+      const user = JSON.parse(email);
+      setUser(user);
+    }
+  }, []);
+  useEffect(() => {
+    const role = window.localStorage.getItem("Role");
+    if (role) {
+      const userRole = JSON.parse(role);
+      setUserRole(userRole);
+    }
+  }, []);
 
 
   return (
@@ -40,8 +52,9 @@ const Files = () => {
                     <ReactstrapNavLink href={file.url} target="_blank">
                       <i className="tim-icons icon-cloud-download-93" />
                     </ReactstrapNavLink>
-                  </td>
-                  <td>
+                  </td>   
+                  {userRole === "Paciente" && (
+                    <td>
                     <Button
                       color="link"
                       id="tooltip636901683"
@@ -64,6 +77,8 @@ const Files = () => {
                       Eliminar
                     </UncontrolledTooltip>
                   </td>
+                  )} 
+                  
                 </tr>
               </tbody>
             ))

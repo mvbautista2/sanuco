@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Route, Switch, Link } from "react-router-dom";
 import FileForm from "./FileForm";
 import Files from "./Files";
@@ -15,13 +15,21 @@ import {
 } from "reactstrap";
 
 function Icons() {
+  const [userRole, setUserRole] = useState(null);
+  useEffect(() => {
+    const role = window.localStorage.getItem("Role");
+    if (role) {
+      const userRole = JSON.parse(role);
+      setUserRole(userRole);
+    }
+  }, []);
+
   return (
     <>
-      
       <div className="content">
-      <Switch>
-        <Route path="/admin/icons/upload" component={FileForm} />
-      </Switch>
+        <Switch>
+          <Route path="/admin/icons/upload" component={FileForm} />
+        </Switch>
         <Row>
           <Col md="12">
             <Card className="card-tasks">
@@ -36,13 +44,14 @@ function Icons() {
                       <tr>
                         <td>
                           <Files />
-
-                          <Link
-                            class="btn btn-primary btn-round"
-                            to="/admin/icons/upload"
-                          >
-                            + Adjuntar Archivo
-                          </Link>
+                          {userRole === "Paciente" && (
+                            <Link
+                              class="btn btn-primary btn-round"
+                              to="/admin/icons/upload"
+                            >
+                              + Adjuntar Archivo
+                            </Link>
+                          )}
                         </td>
                         <td className="td-actions text-right"></td>
                       </tr>

@@ -12,15 +12,29 @@ import {
 
 const Message = () => {
   const [files, setFiles] = useState([]);
-  const { user } = useAuth0();
+  const [userRole, setUserRole] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const email = window.localStorage.getItem("UserFound");
+    if (email) {
+      const user = JSON.parse(email);
+      setUser(user);
+    }
+  }, []);
 
   useEffect(async () => {
-    const res = await axios.get(
-      `http://localhost:4000/api/files/${user.email}`
-    );
+    const res = await axios.get(`http://localhost:4000/api/files/${user}`);
     setFiles(res.data);
   }, [files]);
 
+  useEffect(() => {
+    const role = window.localStorage.getItem("Role");
+    if (role) {
+      const userRole = JSON.parse(role);
+      setUserRole(userRole);
+    }
+  }, []);
 
   return (
     <div className="col-md-12 offset-md-1">
@@ -42,6 +56,8 @@ const Message = () => {
                     </ReactstrapNavLink>
                   </td>
                   <td>
+                  {userRole === "Nutricionista" && (
+                    <td>
                     <Button
                       color="link"
                       id="tooltip636901683"
@@ -63,6 +79,8 @@ const Message = () => {
                     >
                       Eliminar
                     </UncontrolledTooltip>
+                  </td>
+                  )} 
                   </td>
                 </tr>
               </tbody>

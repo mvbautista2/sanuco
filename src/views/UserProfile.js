@@ -1,8 +1,5 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 
-// reactstrap components
-
-import { useAuth0 } from "@auth0/auth0-react";
 import {
   Button,
   Card,
@@ -18,7 +15,15 @@ import {
 } from "reactstrap";
 
 function UserProfile() {
-  const { user } = useAuth0();
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    const role = window.localStorage.getItem("Role");
+    if (role) {
+      const userRole = JSON.parse(role);
+      setUserRole(userRole);
+    }
+  }, []);
 
   return (
     <>
@@ -35,21 +40,13 @@ function UserProfile() {
                     <Col className="pr-md-1" md="6">
                       <FormGroup>
                         <label>Nombres</label>
-                        <Input
-                          defaultValue={user.given_name}
-                          placeholder="Company"
-                          type="text"
-                        />
+                        <Input placeholder="Company" type="text" />
                       </FormGroup>
                     </Col>
                     <Col className="pl-md-1" md="6">
                       <FormGroup>
                         <label>Apellidos</label>
-                        <Input
-                           defaultValue={user.family_name}
-                          placeholder="Last Name"
-                          type="text"
-                        />
+                        <Input placeholder="Last Name" type="text" />
                       </FormGroup>
                     </Col>
                   </Row>
@@ -57,30 +54,19 @@ function UserProfile() {
                     <Col className="pr-md-1" md="4">
                       <FormGroup>
                         <label>Fecha de nacimiento</label>
-                        <Input
-                          defaultValue={user.birthdate}
-                          type="date"
-                        />
+                        <Input type="date" />
                       </FormGroup>
                     </Col>
                     <Col className="px-md-1" md="3">
                       <FormGroup>
                         <label>Usuario</label>
-                        <Input
-                          defaultValue={user.nickname}
-                          placeholder="Username"
-                          type="text"
-                        />
+                        <Input placeholder="Username" type="text" />
                       </FormGroup>
                     </Col>
                     <Col className="pl-md-1" md="5">
                       <FormGroup>
                         <label htmlFor="exampleInputEmail1">Email</label>
-                        <Input
-                          defaultValue={user.email}
-                          placeholder="mike@email.com"
-                          type="email"
-                        />
+                        <Input placeholder="mike@email.com" type="email" />
                       </FormGroup>
                     </Col>
                   </Row>
@@ -98,25 +84,24 @@ function UserProfile() {
                     <Col className="px-md-1" md="3">
                       <FormGroup>
                         <label>Teléfono</label>
-                        <Input
-                          type="number"
-                          defaultValue={user.phone_number}
-                        />
+                        <Input type="number" />
                       </FormGroup>
                     </Col>
                     <Col className="pl-md-1" md="6">
                       <FormGroup>
                         <label>Dirección</label>
-                        <Input type="text" defaultValue={user.address} />
+                        <Input type="text" />
                       </FormGroup>
                     </Col>
                   </Row>
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button className="btn-fill" color="primary" type="submit">
-                  Guardar
-                </Button>
+                {userRole === "Paciente" && (
+                  <Button className="btn-fill" color="primary" type="submit">
+                    Actualizar
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </Col>
@@ -130,12 +115,8 @@ function UserProfile() {
                   <div className="block block-three" />
                   <div className="block block-four" />
                   <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <img
-                      alt="..."
-                      className="avatar"
-                      src={user.picture}
-                    />
-                    <h5 className="title">{user.name}</h5>
+                    <img alt="..." className="avatar" />
+                    <h5 className="title"></h5>
                   </a>
                 </div>
               </CardBody>

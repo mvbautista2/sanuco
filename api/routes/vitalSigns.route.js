@@ -4,17 +4,29 @@ import VitalSign from "../models/vitalSign.js";
 
 const router = Router();
 
-router.post("/", async (req, res) => {
-  
+router.post("/api/vitalSigns/createnew", async (req, res) => {
+  const {
+    temperatura,
+    frecuenciaCardiaca,
+    frecuenciaRespiratoria,
+    sistolica,
+    diastolica,
+    saturacionOxigeno,
+  } = req.body;
 
   try {
-    const user = new VitalSign({
-      
-      email: req.body.user,
+    const sign2 = new VitalSign({
+      temperatura,
+      frecuenciaCardiaca,
+      frecuenciaRespiratoria,
+      sistolica,
+      diastolica,
+      saturacionOxigeno,
+      user: req.body.user,
     });
 
-    await user.save();
-    return res.json(user);
+    await sign2.save();
+    return res.json(sign2);
   } catch (error) {
     console.log(error);
     res.send(error);

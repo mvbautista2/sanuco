@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-import { useAuth0 } from "@auth0/auth0-react";
 import { useHistory, useLocation } from "react-router-dom";
 
 // reactstrap components
@@ -68,7 +67,11 @@ function AdminNavbar(props) {
   const toggleModalSearch = () => {
     setmodalSearch(!modalSearch);
   };
-  const { logout, user } = useAuth0();
+
+  const handleLogout =()=>{
+    window.localStorage.clear();
+    window.location.reload(true);
+  }
 
   return (
     <>
@@ -119,12 +122,12 @@ function AdminNavbar(props) {
                   onClick={(e) => e.preventDefault()}
                 >
                   <div className="photo">
-                    <img alt="..." src={user.picture} />
+                    {/* <img alt="..." src={user.picture} /> */}
                   </div>
                   <b className="caret d-none d-lg-block d-xl-block" />
                   <button
                     class="btn btn-primary btn-round btn-"
-                    onClick={logout}
+                    onClick={handleLogout}
                   >
                     Cerrar Sesión
                   </button>

@@ -1,8 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-// reactstrap components
-
-import { useAuth0 } from "@auth0/auth0-react";
 import {
   Button,
   Card,
@@ -18,10 +15,18 @@ import {
 } from "reactstrap";
 
 function UserRecord() {
-  const { user } = useAuth0();
+  const [userRole, setUserRole] = useState(null);
   const [sexo, setSexo] = useState();
   const [acontecimiento, setAcontecimiento] = useState();
   const [pique, setPique] = useState();
+
+  useEffect(() => {
+    const role = window.localStorage.getItem("Role");
+    if (role) {
+      const userRole = JSON.parse(role);
+      setUserRole(userRole);
+    }
+  }, []);
 
   return (
     <>
@@ -143,9 +148,11 @@ function UserRecord() {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button className="btn-fill" color="primary" type="submit">
-                  Guardar
-                </Button>
+                {userRole === "Paciente" && (
+                  <Button className="btn-fill" color="primary" type="submit">
+                    Guardar
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </Col>
@@ -196,9 +203,11 @@ function UserRecord() {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button className="btn-fill" color="primary" type="submit">
-                  Guardar
-                </Button>
+              {userRole === "Paciente" && (
+                  <Button className="btn-fill" color="primary" type="submit">
+                    Guardar
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </Col>
@@ -353,9 +362,11 @@ function UserRecord() {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button className="btn-fill" color="primary" type="submit">
-                  Guardar
-                </Button>
+              {userRole === "Paciente" && (
+                  <Button className="btn-fill" color="primary" type="submit">
+                    Guardar
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </Col>
@@ -634,9 +645,11 @@ function UserRecord() {
                 </Form>
               </CardBody>
               <CardFooter>
-                <Button className="btn-fill" color="primary" type="submit">
-                  Guardar
-                </Button>
+              {userRole === "Paciente" && (
+                  <Button className="btn-fill" color="primary" type="submit">
+                    Guardar
+                  </Button>
+                )}
               </CardFooter>
             </Card>
           </Col>

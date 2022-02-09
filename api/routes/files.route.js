@@ -43,7 +43,7 @@ router.post("/api/files/upload", async (req, res) => {
   }
 });
 router.get("/api/files/:user", async (req, res) => {
-  const files = await File.find({user: req.params.user});
+  const files = await File.find({ user: req.params.user });
   return res.json(files);
 });
 router.get("/api/files/:id", async (req, res) => {

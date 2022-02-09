@@ -11,12 +11,16 @@ import filesRoute from "./routes/files.route.js";
 import recipesRoute from "./routes/recipes.route.js";
 import vitalSignsRoute from "./routes/vitalSigns.route.js";
 import antropometricRoute from "./routes/antropometric.route.js";
+import authRoute from "./routes/auth.route.js";
+import userRoute from "./routes/user.route.js";
+import { createRoles } from "./libs/initialSetup.js";
 
 import config from "./config.js";
 
 import "./database.js";
 
 const app = express();
+createRoles();
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -42,7 +46,13 @@ app.use(filesRoute);
 app.use(recipesRoute);
 app.use(vitalSignsRoute);
 app.use(antropometricRoute);
+app.use(authRoute);
+app.use(userRoute);
 //app.use(verifyJwt);
+
+app.get("/", (req, res) => {
+  res.send("Server running");
+});
 
 app.use((req, res, next) => {
   const error = new Error("Not found");
@@ -56,4 +66,4 @@ app.use((error, req, res, next) => {
   res.status(status).send(message);
 });
 
-app.listen(4000, () => console.log("Server on port 4000"));
+app.listen(process.env.PORT || 4000, () => console.log("Server on port 4000"));

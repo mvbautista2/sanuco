@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, Link } from "react-router-dom";
 import FileForm from "./FileForm";
 import Message from "./Message";
@@ -15,10 +15,18 @@ import {
 } from "reactstrap";
 
 function Messages() {
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    const role = window.localStorage.getItem("Role");
+    if (role) {
+      const userRole = JSON.parse(role);
+      setUserRole(userRole);
+    }
+  }, []);
   return (
     <>
       <div className="content">
-        
         <Row>
           <Col md="12">
             <Card className="card-tasks">
@@ -33,6 +41,14 @@ function Messages() {
                       <tr>
                         <td>
                           <Message />
+                          {userRole === "Nutricionista" && (
+                            <Link
+                              class="btn btn-primary btn-round"
+                              to="/admin/icons/upload"
+                            >
+                              + Agregar Mensaje
+                            </Link>
+                          )}
                         </td>
                         <td className="td-actions text-right"></td>
                       </tr>

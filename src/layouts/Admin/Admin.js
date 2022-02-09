@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect, useLocation } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
@@ -8,6 +7,7 @@ import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import routesNutricionista from "routesNutricionista.js";
 
 import logo from "assets/img/2966470.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
@@ -21,7 +21,32 @@ function Admin(props) {
   const [sidebarOpened, setsidebarOpened] = React.useState(
     document.documentElement.className.indexOf("nav-open") !== -1
   );
-  
+  const [token, setToken] = useState(null);
+  const [roleUser, setRoleUser] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem("LoggedNotAppUser");
+    if (loggedUser) {
+      const token = JSON.parse(loggedUser);
+      setToken(token);
+    }
+  }, []);
+  useEffect(() => {
+    const role = window.localStorage.getItem("Role");
+    if (role) {
+      const roleUser = JSON.parse(role);
+      setRoleUser(roleUser);
+    }
+  }, []);
+  useEffect(() => {
+    const email = window.localStorage.getItem("UserFound");
+    if (email) {
+      const user = JSON.parse(email);
+      setUser(user);
+    }
+  }, []);
+
   const toggleSidebar = () => {
     document.documentElement.classList.toggle("nav-open");
     setsidebarOpened(!sidebarOpened);
@@ -49,21 +74,10 @@ function Admin(props) {
     }
     return null;
   };
-  const {
-    loginWithPopup,
-    loginWithRedirect,
-    logout,
-    user,
-    isAuthenticated,
-    getAccessTokenSilently,
-  } = useAuth0();
-  return (
-
-    isAuthenticated ?
+  return token && roleUser === "Paciente" ? (
     <>
-      
       <BackgroundColorContext.Consumer>
-        {({ color}) => (
+        {({ color }) => (
           <React.Fragment>
             <div className="wrapper">
               <Sidebar
@@ -80,7 +94,7 @@ function Admin(props) {
                   toggleSidebar={toggleSidebar}
                   sidebarOpened={sidebarOpened}
                 />
-                
+
                 <Switch>
                   {getRoutes(routes)}
                   <Redirect from="*" to="/admin/dashboard" />
@@ -91,16 +105,48 @@ function Admin(props) {
                 }
               </div>
             </div>
-            
           </React.Fragment>
         )}
       </BackgroundColorContext.Consumer>
-    </>:
-   
-    <LoginForm/>
-    
-  )
+    </>
+  ) : token && roleUser === "Nutricionista" ? (
+    <>
+      <BackgroundColorContext.Consumer>
+        {({ color }) => (
+          <React.Fragment>
+            <div className="wrapper">
+              <Sidebar
+                routes={routesNutricionista}
+                logo={{
+                  text: "Sanuco",
+                  imgSrc: logo,
+                }}
+                toggleSidebar={toggleSidebar}
+              />
+              <div className="main-panel" ref={mainPanelRef} data={color}>
+                <AdminNavbar
+                  brandText={getBrandText(location.pathname)}
+                  toggleSidebar={toggleSidebar}
+                  sidebarOpened={sidebarOpened}
+                />
 
+                <Switch>
+                  {getRoutes(routes)}
+                  <Redirect from="*" to="/admin/dashboard" />
+                </Switch>
+                {
+                  // we don't want the Footer to be rendered on map page
+                  location.pathname === "/admin/maps" ? null : <Footer fluid />
+                }
+              </div>
+            </div>
+          </React.Fragment>
+        )}
+      </BackgroundColorContext.Consumer>
+    </>
+  ) : (
+    <LoginForm />
+  );
 }
 
 export default Admin;

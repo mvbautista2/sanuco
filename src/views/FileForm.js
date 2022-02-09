@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-
-import { useAuth0 } from "@auth0/auth0-react";
 
 import { Button } from "reactstrap";
 
@@ -11,7 +9,15 @@ const FileForm = () => {
   const [title, setTitle] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth0();
+  
+const [user, setUser] = useState(null);
+useEffect(() => {
+  const email = window.localStorage.getItem("UserFound");
+  if (email) {
+    const user = JSON.parse(email);
+    setUser(user);
+  }
+}, []);
 
   const history = useHistory();
   const notify = (place) => {
@@ -45,7 +51,7 @@ const FileForm = () => {
 
     formData.append("file", file);
     formData.append("title", title);
-    formData.append("user", user.email);
+    formData.append("user", user);
 
     const res = await axios.post(
       "http://localhost:4000/api/files/upload",
