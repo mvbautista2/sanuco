@@ -4,6 +4,7 @@ import UserProfile from "views/UserProfile.js";
 import UserRecord from "views/UserRecord";
 import Messages from "views/Messages";
 import Notifications from "views/Notifications";
+import Training from "views/Training";
 
 var routes = [
   {
@@ -51,6 +52,13 @@ var routes = [
     name: "RECETAS",
     icon: "tim-icons icon-book-bookmark",
     component: Notifications,
+    layout: "/admin",
+  },
+  {
+    path: "/training",
+    name: "ENTRENAMIENTO",
+    icon: "tim-icons icon-user-run",
+    component: Training,
     layout: "/admin",
   },
   {

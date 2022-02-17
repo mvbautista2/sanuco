@@ -3,11 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import classNames from "classnames";
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
-
-import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
-
 import { size } from "lodash";
+import LastAntros from "../components/Dashboard/LastAntros";
+import LastSigns from "../components/Dashboard/LastSigns";
 
 // reactstrap components
 import {
@@ -28,10 +27,6 @@ import {
   Table,
   Row,
   Col,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
 } from "reactstrap";
 
 function Dashboard(props) {
@@ -43,22 +38,7 @@ function Dashboard(props) {
   const [signs, setSigns] = useState([]);
   const [antros, setAntros] = useState([]);
   const [user, setUser] = useState(null);
-  const [abierto, setAbierto] = useState(false);
-  const [abiertoSigns, setAbiertoSigns] = useState(false);
   const [userRole, setUserRole] = useState(null);
-
-  const openModal = () => {
-    setAbierto(true);
-  };
-  const closeModal = () => {
-    setAbierto(false);
-  };
-  const openModalSigns = () => {
-    setAbiertoSigns(true);
-  };
-  const closeModalSigns = () => {
-    setAbiertoSigns(false);
-  };
 
   useEffect(async () => {
     let abortController = new AbortController();
@@ -98,90 +78,6 @@ function Dashboard(props) {
       setUserRole(userRole);
     }
   }, []);
-  const [lastSigns, setLastSigns] = useState();
-  const [lastAntro, setLastAntro] = useState();
-
-  useEffect(async () => {
-    let abortController = new AbortController();
-    const res = await axios.get(
-      `http://localhost:4000/api/vitalSigns/lastDate/${user}`
-    );
-    setLastSigns(res.data[0]);
-    return () => {
-      abortController.abort();
-    };
-  }, [lastSigns]);
-
-  useEffect(async () => {
-    let abortController = new AbortController();
-    const res1 = await axios.get(
-      `http://localhost:4000/api/antropometric/lastDate/${user}`
-    );
-
-    setLastAntro(res1.data[0]);
-    return () => {
-      abortController.abort();
-    };
-  }, [lastAntro]);
-
-  const [estatura, setEstatura] = useState("");
-  const [peso, setPeso] = useState("");
-  const [sentimiento, setSentimiento] = useState("");
-  const [temperatura, setTemperatura] = useState("");
-  const [frecuenciaCardiaca, setFrecuenciaCardiaca] = useState("");
-  const [frecuenciaRespiratoria, setFrecuenciaRespiratoria] = useState("");
-  const [sistolica, setSistolica] = useState("");
-  const [diastolica, setDiastolica] = useState("");
-  const [cadera, setCadera] = useState("");
-  const [cintura, setCintura] = useState("");
-  const [saturacionOxigeno, setSaturacionOxigeno] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-
-    formData.append("estatura", estatura);
-    formData.append("peso", peso);
-    formData.append("cadera", cadera);
-    formData.append("cintura", cintura);
-    formData.append("sentimiento", sentimiento);
-    formData.append("user", user);
-
-    const res = await axios.post(
-      "http://localhost:4000/api/antropometric/createnew",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    console.log(res);
-  };
-
-  const handleSubmit1 = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-
-    formData.append("temperatura", temperatura);
-    formData.append("frecuenciaCardiaca", frecuenciaCardiaca);
-    formData.append("frecuenciaRespiratoria", frecuenciaRespiratoria);
-    formData.append("sistolica", sistolica);
-    formData.append("diastolica", diastolica);
-    formData.append("saturacionOxigeno", saturacionOxigeno);
-    formData.append("user", user);
-
-    const res = await axios.post(
-      "http://localhost:4000/api/vitalSigns/createnew",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    console.log(res);
-  };
 
   const createdAtA = [];
   const masa = [];
@@ -677,567 +573,175 @@ function Dashboard(props) {
             </Card>
           </Col>
         </Row>
-
         <Row>
-          <Col lg="6" md="12">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h4">Últimos signos antropométricos</CardTitle>
-              </CardHeader>
-              {/* <form onSubmit={handleSubmit}> */}
-              <CardBody>
-                <Row>
-                  <Col className="pr-md-1" md="3">
-                    <FormGroup>
-                      <label>Estatura</label>
-                      <Input
-                        // defaultValue={
-                        //   size(antros) === 0 ? 0 : lastAntro.estatura
-                        // }
-                        // defaultValue={lastAntro.estatura}
-
-                        placeholder="m"
-                        type="number"
-                        step="0.01"
-                        disabled
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="3">
-                    <FormGroup>
-                      <label>Peso</label>
-                      <Input
-                        placeholder="kg"
-                        type="number"
-                        step="0.01"
-                        disabled
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>Índice de Masa Corporal</label>
-                      <Input
-                        disabled
-                        type="number"
-                        placeholder="kg/m2"
-                        step="0.01"
-                        disabled
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="3">
-                    <FormGroup>
-                      <label>Cintura</label>
-                      <Input
-                        placeholder="cm"
-                        type="number"
-                        step="0.01"
-                        disabled
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="3">
-                    <FormGroup>
-                      <label>Cadera</label>
-                      <Input placeholder="cm" type="number" disabled />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>Índice Cintura Cadera</label>
-                      <Input disabled type="number" disabled />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="6">
-                    <FormGroup>
-                      <label>Con estas medidas me siento</label>
-                      <Input type="text" disabled></Input>
-                    </FormGroup>
-                  </Col>
-                </Row>
-              </CardBody>
-              <CardFooter>
-                {userRole === "Paciente" && (
-                  <Button
-                    className="btn-fill"
-                    color="primary"
-                    type="submit"
-                    onClick={openModal}
-                  >
-                    Actualizar
-                  </Button>
-                )}
-              </CardFooter>
-              {/* </form> */}
-            </Card>
-          </Col>
-
-          <Modal isOpen={abierto}>
-            <Col lg="12" md="12">
-              <Card>
-                <ModalHeader>
-                  <CardHeader>
-                    <CardTitle tag="h4">
-                      Actualizar últimos signos antropométricos
-                    </CardTitle>
-                    <button
-                      aria-label="Close"
-                      className="close"
-                      onClick={closeModal}
+          <LastSigns/>
+           <LastAntros/>             
+          {userRole === "Paciente" && (
+            <Col lg="6" md="12">
+              <Card className="card-tasks">
+                <CardHeader>
+                  <h6 className="title d-inline">Mensajes(#)</h6>
+                  <UncontrolledDropdown>
+                    <DropdownToggle
+                      caret
+                      className="btn-icon"
+                      color="link"
+                      data-toggle="dropdown"
+                      type="button"
                     >
-                      <i className="tim-icons icon-simple-remove" />
-                    </button>
-                  </CardHeader>
-                </ModalHeader>
-                <ModalBody>
-                  <form onSubmit={handleSubmit}>
-                    <CardBody>
-                      <Row>
-                        <Col className="pr-md-1" md="3">
-                          <FormGroup>
-                            <label>Estatura</label>
-                            <Input
-                              // defaultValue={
-                              //   size(antros) === 0 ? 0 : lastAntro.estatura
-                              // }
-                              // defaultValue={lastAntro.estatura}
-                              placeholder="m"
-                              type="number"
-                              step="0.01"
-                              onChange={(e) => setEstatura(e.target.value)}
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col className="pr-md-1" md="3">
-                          <FormGroup>
-                            <label>Peso</label>
-                            <Input
-                              placeholder="kg"
-                              type="number"
-                              step="0.01"
-                              onChange={(e) => setPeso(e.target.value)}
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col className="pr-md-1" md="6">
-                          <FormGroup>
-                            <label>Índice de Masa Corporal</label>
-                            <Input
-                              disabled
-                              type="number"
-                              placeholder="kg/m2"
-                              step="0.01"
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col className="pr-md-1" md="3">
-                          <FormGroup>
-                            <label>Cintura</label>
-                            <Input
-                              placeholder="cm"
-                              type="number"
-                              step="0.01"
-                              onChange={(e) => setCintura(e.target.value)}
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col className="pr-md-1" md="3">
-                          <FormGroup>
-                            <label>Cadera</label>
-                            <Input
-                              placeholder="cm"
-                              type="number"
-                              onChange={(e) => setCadera(e.target.value)}
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col className="pr-md-1" md="6">
-                          <FormGroup>
-                            <label>Índice Cintura Cadera</label>
-                            <Input disabled type="number" />
-                          </FormGroup>
-                        </Col>
-                        <Col className="pr-md-1" md="6">
-                          <FormGroup>
-                            <label>Con estas medidas me siento</label>
-                            <Input
-                              type="select"
-                              value={sentimiento}
-                              onChange={(e) =>
-                                setSentimiento(e.currentTarget.value)
-                              }
-                            >
-                              <option>Feliz</option>
-                              <option>Triste</option>
-                            </Input>
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                    </CardBody>
-                    <ModalFooter>
-                      <CardFooter>
-                        <Button
-                          className="btn-fill"
-                          color="primary"
-                          type="submit"
-                        >
-                          Guardar
-                        </Button>
-                      </CardFooter>
-                    </ModalFooter>
-                  </form>
-                </ModalBody>
+                      <i className="tim-icons icon-settings-gear-63" />
+                    </DropdownToggle>
+                    <DropdownMenu aria-labelledby="dropdownMenuLink" right>
+                      <DropdownItem
+                        href="#pablo"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        Action
+                      </DropdownItem>
+                      <DropdownItem
+                        href="#pablo"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        Another action
+                      </DropdownItem>
+                      <DropdownItem
+                        href="#pablo"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        Something else
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                </CardHeader>
+                <CardBody>
+                  <div className="table-full-width table-responsive">
+                    <Table>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <FormGroup check>
+                              <Label check>
+                                <Input defaultValue="" type="checkbox" />
+                                <span className="form-check-sign">
+                                  <span className="check" />
+                                </span>
+                              </Label>
+                            </FormGroup>
+                          </td>
+                          <td>
+                            <p className="title">Update the Documentation</p>
+                            <p className="text-muted">
+                              Dwuamish Head, Seattle, WA 8:47 AM
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <FormGroup check>
+                              <Label check>
+                                <Input
+                                  defaultChecked
+                                  defaultValue=""
+                                  type="checkbox"
+                                />
+                                <span className="form-check-sign">
+                                  <span className="check" />
+                                </span>
+                              </Label>
+                            </FormGroup>
+                          </td>
+                          <td>
+                            <p className="title">GDPR Compliance</p>
+                            <p className="text-muted">
+                              The GDPR is a regulation that requires businesses
+                              to protect the personal data and privacy of Europe
+                              citizens for transactions that occur within EU
+                              member states.
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <FormGroup check>
+                              <Label check>
+                                <Input defaultValue="" type="checkbox" />
+                                <span className="form-check-sign">
+                                  <span className="check" />
+                                </span>
+                              </Label>
+                            </FormGroup>
+                          </td>
+                          <td>
+                            <p className="title">Solve the issues</p>
+                            <p className="text-muted">
+                              Fifty percent of all respondents said they would
+                              be more likely to shop at a company
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <FormGroup check>
+                              <Label check>
+                                <Input defaultValue="" type="checkbox" />
+                                <span className="form-check-sign">
+                                  <span className="check" />
+                                </span>
+                              </Label>
+                            </FormGroup>
+                          </td>
+                          <td>
+                            <p className="title">Release v2.0.0</p>
+                            <p className="text-muted">
+                              Ra Ave SW, Seattle, WA 98116, SUA 11:19 AM
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <FormGroup check>
+                              <Label check>
+                                <Input defaultValue="" type="checkbox" />
+                                <span className="form-check-sign">
+                                  <span className="check" />
+                                </span>
+                              </Label>
+                            </FormGroup>
+                          </td>
+                          <td>
+                            <p className="title">Export the processed files</p>
+                            <p className="text-muted">
+                              The report also shows that consumers will not
+                              easily forgive a company once a breach exposing
+                              their personal data occurs.
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <FormGroup check>
+                              <Label check>
+                                <Input defaultValue="" type="checkbox" />
+                                <span className="form-check-sign">
+                                  <span className="check" />
+                                </span>
+                              </Label>
+                            </FormGroup>
+                          </td>
+                          <td>
+                            <p className="title">Arival at export process</p>
+                            <p className="text-muted">
+                              Capitol Hill, Seattle, WA 12:34 AM
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </div>
+                </CardBody>
               </Card>
             </Col>
-          </Modal>
-
-          <Col lg="6" md="12">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h4">Últimos signos vitales</CardTitle>
-              </CardHeader>
-              <CardBody>
-                <Row>
-                  <Col className="pr-md-1" md="3">
-                    <FormGroup>
-                      <label>Temperatura</label>
-                      <Input
-                        placeholder="ºC"
-                        type="number"
-                        step="0.01"
-                        disabled
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="4">
-                    <FormGroup>
-                      <label>Frecuencia Cardiaca</label>
-                      <Input
-                        placeholder="Latidos por minuto"
-                        type="number"
-                        disabled
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="4">
-                    <FormGroup>
-                      <label>Frecuencia Respiratoria</label>
-                      <Input
-                        placeholder="Respiraciones por minuto"
-                        type="number"
-                        disabled
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="3">
-                    <FormGroup>
-                      <label>Sistólica</label>
-                      <Input placeholder="mmHg" type="number" disabled />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pr-md-1" md="3">
-                    <FormGroup>
-                      <label>Diastólica</label>
-                      <Input placeholder="mmHg" type="number" disabled />
-                    </FormGroup>
-                  </Col>
-
-                  <Col className="pr-md-1" md="5">
-                    <FormGroup>
-                      <label>Saturación de oxígeno</label>
-                      <Input placeholder="00" type="number  " disabled />
-                    </FormGroup>
-                  </Col>
-                </Row>
-              </CardBody>
-
-              <CardFooter>
-              {userRole === "Paciente" && (
-                  <Button
-                    className="btn-fill"
-                    color="primary"
-                    type="submit"
-                    onClick={openModalSigns}
-                  >
-                    Actualizar
-                  </Button>
-                )}
-              </CardFooter>
-            </Card>
-            <Modal isOpen={abiertoSigns}>
-              <Card>
-                <ModalHeader>
-                  <CardHeader>
-                    <CardTitle tag="h4">
-                      Actualiza últimos signos vitales
-                    </CardTitle>
-                  </CardHeader>
-                  <button
-                    aria-label="Close"
-                    className="close"
-                    onClick={closeModalSigns}
-                  >
-                    <i className="tim-icons icon-simple-remove" />
-                  </button>
-                </ModalHeader>
-                <ModalBody>
-                  <form onSubmit={handleSubmit1}>
-                    <CardBody>
-                      <Row>
-                        <Col className="pr-md-1" md="3">
-                          <FormGroup>
-                            <label>Temperatura</label>
-                            <Input
-                              placeholder="ºC"
-                              type="number"
-                              step="0.01"
-                              onChange={(e) => setTemperatura(e.target.value)}
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col className="pr-md-1" md="4">
-                          <FormGroup>
-                            <label>Frecuencia Cardiaca</label>
-                            <Input
-                              placeholder="Latidos por minuto"
-                              type="number"
-                              onChange={(e) =>
-                                setFrecuenciaCardiaca(e.target.value)
-                              }
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col className="pr-md-1" md="4">
-                          <FormGroup>
-                            <label>Frecuencia Respiratoria</label>
-                            <Input
-                              placeholder="Respiraciones por minuto"
-                              type="number"
-                              onChange={(e) =>
-                                setFrecuenciaRespiratoria(e.target.value)
-                              }
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col className="pr-md-1" md="3">
-                          <FormGroup>
-                            <label>Sistólica</label>
-                            <Input
-                              placeholder="mmHg"
-                              type="number"
-                              onChange={(e) => setSistolica(e.target.value)}
-                            />
-                          </FormGroup>
-                        </Col>
-                        <Col className="pr-md-1" md="3">
-                          <FormGroup>
-                            <label>Diastólica</label>
-                            <Input
-                              placeholder="mmHg"
-                              type="number"
-                              onChange={(e) => setDiastolica(e.target.value)}
-                            />
-                          </FormGroup>
-                        </Col>
-
-                        <Col className="pr-md-1" md="5">
-                          <FormGroup>
-                            <label>Saturación de oxígeno</label>
-                            <Input
-                              placeholder="00"
-                              type="number  "
-                              onChange={(e) =>
-                                setSaturacionOxigeno(e.target.value)
-                              }
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                    </CardBody>
-                    <ModalFooter>
-                      <CardFooter>
-                        <Button
-                          className="btn-fill"
-                          color="primary"
-                          type="submit"
-                        >
-                          Guardar
-                        </Button>
-                      </CardFooter>
-                    </ModalFooter>
-                  </form>
-                </ModalBody>
-              </Card>
-            </Modal>
-          </Col>
-          {userRole === "Paciente" && (
-                  <Col lg="6" md="12">
-                  <Card className="card-tasks">
-                    <CardHeader>
-                      <h6 className="title d-inline">Mensajes(#)</h6>
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                          caret
-                          className="btn-icon"
-                          color="link"
-                          data-toggle="dropdown"
-                          type="button"
-                        >
-                          <i className="tim-icons icon-settings-gear-63" />
-                        </DropdownToggle>
-                        <DropdownMenu aria-labelledby="dropdownMenuLink" right>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Action
-                          </DropdownItem>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Another action
-                          </DropdownItem>
-                          <DropdownItem
-                            href="#pablo"
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            Something else
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </CardHeader>
-                    <CardBody>
-                      <div className="table-full-width table-responsive">
-                        <Table>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <FormGroup check>
-                                  <Label check>
-                                    <Input defaultValue="" type="checkbox" />
-                                    <span className="form-check-sign">
-                                      <span className="check" />
-                                    </span>
-                                  </Label>
-                                </FormGroup>
-                              </td>
-                              <td>
-                                <p className="title">Update the Documentation</p>
-                                <p className="text-muted">
-                                  Dwuamish Head, Seattle, WA 8:47 AM
-                                </p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <FormGroup check>
-                                  <Label check>
-                                    <Input
-                                      defaultChecked
-                                      defaultValue=""
-                                      type="checkbox"
-                                    />
-                                    <span className="form-check-sign">
-                                      <span className="check" />
-                                    </span>
-                                  </Label>
-                                </FormGroup>
-                              </td>
-                              <td>
-                                <p className="title">GDPR Compliance</p>
-                                <p className="text-muted">
-                                  The GDPR is a regulation that requires businesses to
-                                  protect the personal data and privacy of Europe
-                                  citizens for transactions that occur within EU
-                                  member states.
-                                </p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <FormGroup check>
-                                  <Label check>
-                                    <Input defaultValue="" type="checkbox" />
-                                    <span className="form-check-sign">
-                                      <span className="check" />
-                                    </span>
-                                  </Label>
-                                </FormGroup>
-                              </td>
-                              <td>
-                                <p className="title">Solve the issues</p>
-                                <p className="text-muted">
-                                  Fifty percent of all respondents said they would be
-                                  more likely to shop at a company
-                                </p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <FormGroup check>
-                                  <Label check>
-                                    <Input defaultValue="" type="checkbox" />
-                                    <span className="form-check-sign">
-                                      <span className="check" />
-                                    </span>
-                                  </Label>
-                                </FormGroup>
-                              </td>
-                              <td>
-                                <p className="title">Release v2.0.0</p>
-                                <p className="text-muted">
-                                  Ra Ave SW, Seattle, WA 98116, SUA 11:19 AM
-                                </p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <FormGroup check>
-                                  <Label check>
-                                    <Input defaultValue="" type="checkbox" />
-                                    <span className="form-check-sign">
-                                      <span className="check" />
-                                    </span>
-                                  </Label>
-                                </FormGroup>
-                              </td>
-                              <td>
-                                <p className="title">Export the processed files</p>
-                                <p className="text-muted">
-                                  The report also shows that consumers will not easily
-                                  forgive a company once a breach exposing their
-                                  personal data occurs.
-                                </p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <FormGroup check>
-                                  <Label check>
-                                    <Input defaultValue="" type="checkbox" />
-                                    <span className="form-check-sign">
-                                      <span className="check" />
-                                    </span>
-                                  </Label>
-                                </FormGroup>
-                              </td>
-                              <td>
-                                <p className="title">Arival at export process</p>
-                                <p className="text-muted">
-                                  Capitol Hill, Seattle, WA 12:34 AM
-                                </p>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </Col>
-                )}
-          
+          )}
         </Row>
       </div>
     </>
