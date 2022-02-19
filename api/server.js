@@ -18,6 +18,7 @@ import demographicProfileRoute from "./routes/demographicProfile.route.js";
 import anamnesisRoute from "./routes/anamnesis.route.js";
 import habitsRoute from "./routes/habits.route.js";
 import behaviorRoute from "./routes/behavior.route.js";
+import messagesRoute from "./routes/messages.route.js";
 import { createRoles } from "./libs/initialSetup.js";
 
 import config from "./config.js";
@@ -58,6 +59,7 @@ app.use(demographicProfileRoute);
 app.use(anamnesisRoute);
 app.use(habitsRoute);
 app.use(behaviorRoute);
+app.use(messagesRoute);
 //app.use(verifyJwt);
 
 app.get("/", (req, res) => {

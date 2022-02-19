@@ -257,7 +257,7 @@ export default function LoginForm() {
     setIsSignUp(!isSignUp);
   };
   const googleSuccess = async (res) => {
-    //console.log(res);
+    console.log(res);
     axios({
       method: "POST",
       url: "http://localhost:4000/api/googlelogin",
@@ -499,7 +499,7 @@ export default function LoginForm() {
               <Row>
                 <Col md="12">
                   <Row>
-                    <Col className="px-md-1" md="4">
+                    <Col className="pr-md-1" md="12">
                       <FormGroup>
                         <Label>Rol</Label>
                         <Input

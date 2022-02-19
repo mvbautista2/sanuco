@@ -21,4 +21,27 @@ router.get(
   }
 );
 
+router.get("/api/userInfo/:email", async (req, res) => {
+  const userInfo = await User.find({ email: req.params.email });
+  return res.json(userInfo);
+});
+
+router.put("/api/user/:email", async (req, res) => {
+  const { username, given_name, family_name, birthday, address, phone, sex } =
+    req.body;
+  await User.findOneAndUpdate(
+    { email: req.params.email },
+    {
+      username,
+      given_name,
+      family_name,
+      birthday,
+      address,
+      phone,
+      sex,
+    }
+  );
+  res.json({ message: "User updated" });
+});
+
 export default router;

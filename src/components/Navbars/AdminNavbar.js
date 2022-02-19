@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 // nodejs library that concatenates classes
 import classNames from "classnames";
+import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
 
 // reactstrap components
@@ -28,6 +29,8 @@ import Notifications from "views/Notifications";
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
+  const [user, setUser] = useState(null);
+  const [userInfo, setUserInfo] = useState("");
   const [color, setcolor] = React.useState("navbar-transparent");
   const query = useQuery();
   const history = useHistory();
@@ -68,19 +71,45 @@ function AdminNavbar(props) {
     setmodalSearch(!modalSearch);
   };
 
-  const handleLogout =()=>{
+  const handleLogout = () => {
     window.localStorage.clear();
     window.location.reload(true);
-  }
+  };
+
+  // useEffect(() => {
+  //   const email = window.localStorage.getItem("UserFound");
+  //   if (email) {
+  //     const user = JSON.parse(email);
+  //     setUser(user);
+  //   }
+  // }, []);
+
+  useEffect(async () => {
+    const email = window.localStorage
+      .getItem("UserFound")
+      .replace(/['"]+/g, "");
+    // if (email) {
+    //   const user = JSON.parse(email);
+    //   setUser(user);
+    // }
+    const res = await axios.get(`http://localhost:4000/api/userInfo/${email}`);
+    setUserInfo(res.data[0]);
+    // console.log(res.data[0]);
+  }, [userInfo]);
 
   return (
     <>
       <Switch>
         <Route
           path="/admin/recipes/recipes/search/:ingredient"
-          component={Recipes} exact
+          component={Recipes}
+          exact
         />
-        <Route path="/admin/recipes/recipes/:id" component={RecipeDetail} exact/>
+        <Route
+          path="/admin/recipes/recipes/:id"
+          component={RecipeDetail}
+          exact
+        />
       </Switch>
       <Navbar className={classNames("navbar-absolute", color)} expand="lg">
         <Container fluid>
@@ -122,7 +151,15 @@ function AdminNavbar(props) {
                   onClick={(e) => e.preventDefault()}
                 >
                   <div className="photo">
-                    {/* <img alt="..." src={user.picture} /> */}
+                    {userInfo.picture === null ||
+                    userInfo.picture === undefined ? (
+                      <img
+                        alt="..."
+                        src={require("assets/img/anime3.png").default}
+                      />
+                    ) : (
+                      <img alt="..." src={userInfo.picture} />
+                    )}
                   </div>
                   <b className="caret d-none d-lg-block d-xl-block" />
                   <button

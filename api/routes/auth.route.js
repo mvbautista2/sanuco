@@ -44,8 +44,12 @@ router.post(
       family_name,
       email,
       birthday,
+      picture,
       password,
       role,
+      address,
+      phone,
+      sex,
     } = req.body;
 
     const newUser = new User({
@@ -54,6 +58,10 @@ router.post(
       family_name,
       email,
       birthday,
+      picture,
+      address,
+      phone,
+      sex,
       password: await User.encryptPassword(password),
     });
 
@@ -86,8 +94,9 @@ router.post("/api/googlelogin", async (req, res) => {
         "362449996279-6tog3bo75fspopbn3dhf3fmjrt8s4lik.apps.googleusercontent.com",
     })
     .then(async (response) => {
-      const { email_verified, email, given_name, family_name } =
+      const { email_verified, email, given_name, family_name, picture } =
         response.payload;
+      console.log(picture);
 
       if (email_verified) {
         User.findOne({ email })
@@ -105,6 +114,7 @@ router.post("/api/googlelogin", async (req, res) => {
                 family_name,
                 email,
                 password,
+                picture,
                 role,
               });
 

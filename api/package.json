@@ -27,6 +27,8 @@
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^2.0.5",
     "mongoose": "^6.1.7",
+    "mongoose-date-format": "^1.2.0",
+    "mongoose-dateonly": "^1.0.6",
     "multer": "^1.4.4"
   },
   "devDependencies": {
