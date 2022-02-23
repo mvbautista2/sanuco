@@ -26,6 +26,13 @@ function Dashboard(props) {
   const setBgChartData = (name) => {
     setbigChartData(name);
   };
+  const [showText, setShowText] = useState(false);
+  const handleMouseOver = () => {
+    setShowText(true);
+  };
+  const handleMouseLeave = () => {
+    setShowText(false);
+  };
 
   const [signs, setSigns] = useState([]);
   const [antros, setAntros] = useState([]);
@@ -344,12 +351,16 @@ function Dashboard(props) {
                   <tbody>
                     {antros.map((sentimiento) => (
                       <>
-                        <td>
+                        <td
+                          onMouseOver={handleMouseOver}
+                          onMouseLeave={handleMouseLeave}
+                        >
                           {sentimiento.sentimiento === "Feliz" ? (
                             <img
                               alt="..."
                               src={require("assets/img/smile.png").default}
                               className="avatar"
+                              
                             />
                           ) : sentimiento.sentimiento === "Triste" ? (
                             <img
@@ -357,27 +368,28 @@ function Dashboard(props) {
                               src={require("assets/img/triste.png").default}
                               className="avatar"
                             />
-                          ): sentimiento.sentimiento === "Normal" ?(
+                          ) : sentimiento.sentimiento === "Normal" ? (
                             <img
-                            alt="..."
-                            src={require("assets/img/neutral.png").default}
-                            className="avatar"
-                          />
-                          ):sentimiento.sentimiento === "Tranquil@" ?(
+                              alt="..."
+                              src={require("assets/img/neutral.png").default}
+                              className="avatar"
+                            />
+                          ) : sentimiento.sentimiento === "Tranquil@" ? (
                             <img
-                            alt="..."
-                            src={require("assets/img/tranquilo.png").default}
-                            className="avatar"
-                          />
-                          ):sentimiento.sentimiento === "Preocupad@" ?(
+                              alt="..."
+                              src={require("assets/img/tranquilo.png").default}
+                              className="avatar"
+                            />
+                          ) : sentimiento.sentimiento === "Preocupad@" ? (
                             <img
-                            alt="..."
-                            src={require("assets/img/preocupado.png").default}
-                            className="avatar"
-                          />
-                          ):(
+                              alt="..."
+                              src={require("assets/img/preocupado.png").default}
+                              className="avatar"
+                            />
+                          ) : (
                             "No registrado"
                           )}
+                          {showText && <> {sentimiento.sentimiento}</>}
                         </td>
                       </>
                     ))}
