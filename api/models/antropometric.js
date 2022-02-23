@@ -1,5 +1,6 @@
 import pkg from "mongoose";
 const { Schema, model } = pkg;
+import mongooseDateFormat from "mongoose-date-format";
 
 const AntropometricSchema = new Schema(
   {
@@ -19,4 +20,5 @@ const AntropometricSchema = new Schema(
   }
 );
 
+AntropometricSchema.plugin(mongooseDateFormat);
 export default model("Antropometric", AntropometricSchema);

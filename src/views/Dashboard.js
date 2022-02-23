@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import axios from "axios";
-import { size } from "lodash";
 import LastAntros from "../components/Dashboard/LastAntros";
 import LastSigns from "../components/Dashboard/LastSigns";
 import Message from "./Message";
@@ -17,14 +16,6 @@ import {
   CardHeader,
   CardBody,
   CardTitle,
-  CardFooter,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  Label,
-  FormGroup,
-  Input,
   Table,
   Row,
   Col,
@@ -87,6 +78,7 @@ function Dashboard(props) {
   const cintu = [];
   const cade = [];
   const cinturaCade = [];
+  const feel = [];
 
   antros.forEach((element) => {
     createdAtA.push(element.createdAt);
@@ -96,6 +88,7 @@ function Dashboard(props) {
     cintu.push(element.cintura);
     cade.push(element.cadera);
     cinturaCade.push(element.cinturaCadera);
+    feel.push(element.sentimiento);
   });
 
   const chart1_2_options = {
@@ -248,202 +241,6 @@ function Dashboard(props) {
     options: chart1_2_options,
   };
 
-  const chartExample2 = {
-    data: (canvas) => {
-      let ctx = canvas.getContext("2d");
-
-      let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-      gradientStroke.addColorStop(1, "rgba(29,140,248,0.2)");
-      gradientStroke.addColorStop(0.4, "rgba(29,140,248,0.0)");
-      gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
-
-      return {
-        labels: createdAtA,
-        datasets: [
-          {
-            label: "Cadera",
-            fill: true,
-            backgroundColor: gradientStroke,
-            borderColor: "#1f8ef1",
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: "#1f8ef1",
-            pointBorderColor: "rgba(255,255,255,0)",
-            pointHoverBackgroundColor: "#1f8ef1",
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: cade,
-          },
-        ],
-      };
-    },
-    options: chart1_2_options,
-  };
-
-  let chartExample3 = {
-    data: (canvas) => {
-      let ctx = canvas.getContext("2d");
-
-      let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-      gradientStroke.addColorStop(1, "rgba(72,72,176,0.1)");
-      gradientStroke.addColorStop(0.4, "rgba(72,72,176,0.0)");
-      gradientStroke.addColorStop(0, "rgba(119,52,169,0)"); //purple colors
-
-      return {
-        labels: createdAtA,
-        datasets: [
-          {
-            label: "Cintura",
-            fill: true,
-            backgroundColor: gradientStroke,
-            hoverBackgroundColor: gradientStroke,
-            borderColor: "#d048b6",
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            data: cintu,
-          },
-        ],
-      };
-    },
-    options: {
-      maintainAspectRatio: false,
-      legend: {
-        display: false,
-      },
-      tooltips: {
-        backgroundColor: "#f5f5f5",
-        titleFontColor: "#333",
-        bodyFontColor: "#666",
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest",
-      },
-      responsive: true,
-      scales: {
-        yAxes: [
-          {
-            gridLines: {
-              drawBorder: false,
-              color: "rgba(225,78,202,0.1)",
-              zeroLineColor: "transparent",
-            },
-            ticks: {
-              suggestedMin: 60,
-              suggestedMax: 120,
-              padding: 20,
-              fontColor: "#9e9e9e",
-            },
-          },
-        ],
-        xAxes: [
-          {
-            gridLines: {
-              drawBorder: false,
-              color: "rgba(225,78,202,0.1)",
-              zeroLineColor: "transparent",
-            },
-            ticks: {
-              padding: 20,
-              fontColor: "#9e9e9e",
-            },
-          },
-        ],
-      },
-    },
-  };
-  const chartExample4 = {
-    data: (canvas) => {
-      let ctx = canvas.getContext("2d");
-
-      let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-      gradientStroke.addColorStop(1, "rgba(66,134,121,0.15)");
-      gradientStroke.addColorStop(0.4, "rgba(66,134,121,0.0)"); //green colors
-      gradientStroke.addColorStop(0, "rgba(66,134,121,0)"); //green colors
-
-      return {
-        labels: createdAtA,
-        datasets: [
-          {
-            label: "Estatura",
-            fill: true,
-            backgroundColor: gradientStroke,
-            borderColor: "#00d6b4",
-            borderWidth: 2,
-            borderDash: [],
-            borderDashOffset: 0.0,
-            pointBackgroundColor: "#00d6b4",
-            pointBorderColor: "rgba(255,255,255,0)",
-            pointHoverBackgroundColor: "#00d6b4",
-            pointBorderWidth: 20,
-            pointHoverRadius: 4,
-            pointHoverBorderWidth: 15,
-            pointRadius: 4,
-            data: est,
-          },
-        ],
-      };
-    },
-    options: {
-      maintainAspectRatio: false,
-      legend: {
-        display: false,
-      },
-
-      tooltips: {
-        backgroundColor: "#f5f5f5",
-        titleFontColor: "#333",
-        bodyFontColor: "#666",
-        bodySpacing: 4,
-        xPadding: 12,
-        mode: "nearest",
-        intersect: 0,
-        position: "nearest",
-      },
-      responsive: true,
-      scales: {
-        yAxes: [
-          {
-            barPercentage: 1.6,
-            gridLines: {
-              drawBorder: false,
-              color: "rgba(29,140,248,0.0)",
-              zeroLineColor: "transparent",
-            },
-            ticks: {
-              suggestedMin: 50,
-              suggestedMax: 125,
-              padding: 20,
-              fontColor: "#9e9e9e",
-            },
-          },
-        ],
-
-        xAxes: [
-          {
-            barPercentage: 1.6,
-            gridLines: {
-              drawBorder: false,
-              color: "rgba(0,242,195,0.1)",
-              zeroLineColor: "transparent",
-            },
-            ticks: {
-              padding: 20,
-              fontColor: "#9e9e9e",
-            },
-          },
-        ],
-      },
-    },
-  };
   return (
     <>
       <div className="content">
@@ -528,48 +325,119 @@ function Dashboard(props) {
           </Col>
         </Row>
         <Row>
-          <Col lg="4">
-            <Card className="card-chart">
+          <Col md="12">
+            <Card>
               <CardHeader>
-                <h5 className="card-category">Cadera</h5>
+                <CardTitle tag="h4">Sentimientos</CardTitle>
               </CardHeader>
               <CardBody>
-                <div className="chart-area">
-                  <Line
-                    data={chartExample2.data}
-                    options={chartExample2.options}
-                  />
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="4">
-            <Card className="card-chart">
-              <CardHeader>
-                <h5 className="card-category">Cintura</h5>
-              </CardHeader>
-              <CardBody>
-                <div className="chart-area">
-                  <Bar
-                    data={chartExample3.data}
-                    options={chartExample3.options}
-                  />
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col lg="4">
-            <Card className="card-chart">
-              <CardHeader>
-                <h5 className="card-category">Estatura</h5>
-              </CardHeader>
-              <CardBody>
-                <div className="chart-area">
-                  <Line
-                    data={chartExample4.data}
-                    options={chartExample4.options}
-                  />
-                </div>
+                <Table className="tablesorter" responsive>
+                  <thead className="text-primary">
+                    <tr>
+                      {antros.map((fecha) => (
+                        <>
+                          <th>{fecha.createdAt}</th>
+                        </>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {antros.map((sentimiento) => (
+                      <>
+                        <td>
+                          {sentimiento.sentimiento === "Feliz" ? (
+                            <img
+                              alt="..."
+                              src={require("assets/img/smile.png").default}
+                              className="avatar"
+                            />
+                          ) : sentimiento.sentimiento === "Triste" ? (
+                            <img
+                              alt="..."
+                              src={require("assets/img/triste.png").default}
+                              className="avatar"
+                            />
+                          ): sentimiento.sentimiento === "Normal" ?(
+                            <img
+                            alt="..."
+                            src={require("assets/img/neutral.png").default}
+                            className="avatar"
+                          />
+                          ):sentimiento.sentimiento === "Tranquil@" ?(
+                            <img
+                            alt="..."
+                            src={require("assets/img/tranquilo.png").default}
+                            className="avatar"
+                          />
+                          ):sentimiento.sentimiento === "Preocupad@" ?(
+                            <img
+                            alt="..."
+                            src={require("assets/img/preocupado.png").default}
+                            className="avatar"
+                          />
+                          ):(
+                            "No registrado"
+                          )}
+                        </td>
+                      </>
+                    ))}
+                  </tbody>
+                </Table>
+                {/* <Table className="tablesorter" responsive> */}
+
+                {/* <thead className="text-primary">
+                    <tr>
+                      <th>Name</th>
+                      <th>Country</th>
+                      <th>City</th>
+                      <th className="text-center">Salary</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Dakota Rice</td>
+                      <td>Niger</td>
+                      <td>Oud-Turnhout</td>
+                      <td className="text-center">$36,738</td>
+                    </tr>
+                    <tr>
+                      <td>Minerva Hooper</td>
+                      <td>Curaçao</td>
+                      <td>Sinaai-Waas</td>
+                      <td className="text-center">$23,789</td>
+                    </tr>
+                    <tr>
+                      <td>Sage Rodriguez</td>
+                      <td>Netherlands</td>
+                      <td>Baileux</td>
+                      <td className="text-center">$56,142</td>
+                    </tr>
+                    <tr>
+                      <td>Philip Chaney</td>
+                      <td>Korea, South</td>
+                      <td>Overland Park</td>
+                      <td className="text-center">$38,735</td>
+                    </tr>
+                    <tr>
+                      <td>Doris Greene</td>
+                      <td>Malawi</td>
+                      <td>Feldkirchen in Kärnten</td>
+                      <td className="text-center">$63,542</td>
+                    </tr>
+                    <tr>
+                      <td>Mason Porter</td>
+                      <td>Chile</td>
+                      <td>Gloucester</td>
+                      <td className="text-center">$78,615</td>
+                    </tr>
+                    <tr>
+                      <td>Jon Porter</td>
+                      <td>Portugal</td>
+                      <td>Gloucester</td>
+                      <td className="text-center">$98,615</td>
+                    </tr>
+                  </tbody> */}
+                {/* </Table> */}
               </CardBody>
             </Card>
           </Col>
@@ -582,13 +450,12 @@ function Dashboard(props) {
               <Card className="card-tasks">
                 <CardHeader>
                   <h6 className="title d-inline">Mensajes</h6>
-                  
                 </CardHeader>
                 <CardBody>
                   <div className="table-full-width table-responsive">
                     <Table>
                       <tbody>
-                        <Message/>
+                        <Message />
                       </tbody>
                     </Table>
                   </div>

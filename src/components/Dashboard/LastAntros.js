@@ -306,6 +306,7 @@ export default function LastAntros() {
                             setSentimiento(e.currentTarget.value)
                           }
                         >
+                          <option>Seleccione una</option>
                           <option>Normal</option>
                           <option>Feliz</option>
                           <option>Tranquil@</option>
