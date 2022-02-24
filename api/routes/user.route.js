@@ -27,8 +27,16 @@ router.get("/api/userInfo/:email", async (req, res) => {
 });
 
 router.put("/api/user/:email", async (req, res) => {
-  const { username, given_name, family_name, birthday, address, phone, sex } =
-    req.body;
+  const {
+    username,
+    given_name,
+    family_name,
+    birthday,
+    address,
+    phone,
+    sex,
+    picture,
+  } = req.body;
   await User.findOneAndUpdate(
     { email: req.params.email },
     {
@@ -39,6 +47,7 @@ router.put("/api/user/:email", async (req, res) => {
       address,
       phone,
       sex,
+      picture,
     }
   );
   res.json({ message: "User updated" });

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import FileBase64 from "react-file-base64";
 import { size } from "lodash";
 
 import {
@@ -30,6 +31,7 @@ function UserProfile() {
     username: "",
     address: "",
     phone: "",
+    picture: "",
     birthday: "",
     sex: "Mujer",
   });
@@ -72,6 +74,7 @@ function UserProfile() {
       formData.append("sex", todo.sex);
       formData.append("phone", todo.phone);
       formData.append("birthday", todo.birthday);
+      formData.append("picture", todo.picture);
       const res = await axios.put(
         "http://localhost:4000/api/user/" + email,
         formData,
@@ -328,12 +331,16 @@ function UserProfile() {
                         <label>Sexo</label>
                         <Input
                           type="select"
-                          defaultValue={todo.sex == undefined ? "Mujer" : todo.sex}
+                          defaultValue={
+                            todo.sex == undefined ? "Mujer" : todo.sex
+                          }
                           onChange={(e) =>
                             setTodo({ ...todo, sex: e.currentTarget.value })
                           }
                         >
-                          <option value={"No registrado"}>Seleccione uno</option>
+                          <option value={"No registrado"}>
+                            Seleccione uno
+                          </option>
                           <option>Mujer</option>
                           <option>Hombre</option>
                           <option>Prefiero no decirlo</option>
@@ -362,6 +369,18 @@ function UserProfile() {
                           defaultValue={todo.address}
                           onChange={(e) =>
                             setTodo({ ...todo, address: e.target.value })
+                          }
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <label>Clic aquí para actualizar imagen de perfil</label>
+                        <FileBase64
+                          type="file"
+                          multiple={false}
+                          onDone={({ base64 }) =>
+                            setTodo({ ...todo, picture: base64 })
                           }
                         />
                       </FormGroup>
