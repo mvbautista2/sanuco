@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { GoogleLogin } from "react-google-login";
 import {
@@ -14,9 +13,6 @@ import {
   Button,
   Col,
   Row,
-  CardBody,
-  Card,
-  CardFooter,
 } from "reactstrap";
 
 import NotificationAlert from "react-notification-alert";
@@ -92,6 +88,25 @@ export default function LoginForm() {
     };
     notificationAlertRef.current.notificationAlert(options);
   };
+  const notifyErrorSignUP = (place) => {
+    var type = "warning";
+    var options = {};
+    options = {
+      place: place,
+      message: (
+        <div>
+          <div>
+            Usuario y/o Email<b> ya se encuentran registados</b> - Ingrese un usuario y/o email diferente
+          </div>
+        </div>
+      ),
+      type: type,
+      icon: "tim-icons icon-bell-55",
+      autoDismiss: 7,
+    };
+    notificationAlertRef.current.notificationAlert(options);
+  };
+  
   const [abierto, setAbierto] = useState(false);
   const [actualizarRol, setActualizarRol] = useState(false);
   const [role, setRole] = useState("Paciente");
@@ -204,7 +219,7 @@ export default function LoginForm() {
           window.location.reload(true);
         }
       } catch (error) {
-        notifyError("tl");
+        notifyErrorSignUP("tl");
       }
     } else {
       try {

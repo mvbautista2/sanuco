@@ -1,9 +1,9 @@
 import Dashboard from "views/Dashboard.js";
-import Icons from "views/Icons.js";
+import File from "views/File.js";
 import UserProfile from "views/UserProfile.js";
 import UserRecord from "views/UserRecord";
 import Messages from "views/Messages";
-import Notifications from "views/Notifications";
+import Recipes from "views/Recipes";
 import Training from "views/Training";
 
 var routes = [
@@ -16,11 +16,11 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/icons",
+    path: "/file",
     name: "Exámenes",
     rtlName: "الرموز",
     icon: "tim-icons icon-attach-87",
-    component: Icons,
+    component: File,
     layout: "/admin",
   },
   {
@@ -51,7 +51,7 @@ var routes = [
     path: "/recipes",
     name: "RECETAS",
     icon: "tim-icons icon-book-bookmark",
-    component: Notifications,
+    component: Recipes,
     layout: "/admin",
   },
   {
@@ -63,7 +63,7 @@ var routes = [
   },
   {
     path: "/recipes",
-    component: Notifications,
+    component: Recipes,
     layout: "/admin",
   },
 ];

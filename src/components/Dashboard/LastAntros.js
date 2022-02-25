@@ -80,6 +80,8 @@ export default function LastAntros() {
         },
       }
     );
+    closeModal();
+    window.location.reload(true);
     console.log(res);
   };
   return (
@@ -240,6 +242,7 @@ export default function LastAntros() {
                       <FormGroup>
                         <label>Estatura</label>
                         <Input
+                          required
                           placeholder="m"
                           type="number"
                           step="0.01"
@@ -251,6 +254,7 @@ export default function LastAntros() {
                       <FormGroup>
                         <label>Peso</label>
                         <Input
+                          required
                           placeholder="kg"
                           type="number"
                           step="0.01"
@@ -273,6 +277,7 @@ export default function LastAntros() {
                       <FormGroup>
                         <label>Cintura</label>
                         <Input
+                          required
                           placeholder="cm"
                           type="number"
                           step="0.01"
@@ -284,6 +289,7 @@ export default function LastAntros() {
                       <FormGroup>
                         <label>Cadera</label>
                         <Input
+                          required
                           placeholder="cm"
                           type="number"
                           onChange={(e) => setCadera(e.target.value)}
@@ -300,6 +306,7 @@ export default function LastAntros() {
                       <FormGroup>
                         <label>Con estas medidas me siento</label>
                         <Input
+                          required
                           type="select"
                           value={sentimiento}
                           onChange={(e) =>

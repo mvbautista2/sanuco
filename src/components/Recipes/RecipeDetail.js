@@ -51,13 +51,15 @@ export const RecipeDetail = () => {
   });
   return (
     <>
-    
       <div className="row p-5">
-        
-          <div className="col-md-3   offset-md-3">
-            <ReactPlayer width= "800px" height="400px" controls url={recipe.video} />
-          </div>
-        
+        <div className="col-md-3   offset-md-3">
+          <ReactPlayer
+            width="800px"
+            height="400px"
+            controls
+            url={recipe.video}
+          />
+        </div>
       </div>
 
       <div className="row p-5">
@@ -114,11 +116,11 @@ export const RecipeDetail = () => {
             <div className="card-body">
               <Alert color="warning">
                 <h3 style={{ color: "white" }}>Ingredientes</h3>
-                <span>{recipe.ingredients}</span>
+                <span style={{ whiteSpace: "pre-wrap" }}>{recipe.ingredients}</span>
               </Alert>
               <Alert color="warning">
                 <h3 style={{ color: "white" }}>Instrucciones</h3>
-                <span>{recipe.instructions}</span>
+                <span style={{ whiteSpace: "pre-wrap" }}>{recipe.instructions}</span>
               </Alert>
             </div>
           </div>

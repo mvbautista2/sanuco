@@ -79,6 +79,8 @@ export default function Anamnesis() {
         },
       }
     );
+    closeModal();
+    window.location.reload(true);
     console.log(res);
   };
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { Route, Switch, Link } from "react-router-dom";
-import FileForm from "./FileForm";
-import Files from "./Files";
+import FileForm from "../components/Files/FileForm";
+import Files from "../components/Files/Files.js";
 // reactstrap components
 import {
   Card,
@@ -14,7 +14,7 @@ import {
   UncontrolledTooltip,
 } from "reactstrap";
 
-function Icons() {
+function File() {
   const [userRole, setUserRole] = useState(null);
   useEffect(() => {
     const role = window.localStorage.getItem("Role");
@@ -28,7 +28,7 @@ function Icons() {
     <>
       <div className="content">
         <Switch>
-          <Route path="/admin/icons/upload" component={FileForm} />
+          <Route path="/admin/file/upload" component={FileForm} />
         </Switch>
         <Row>
           <Col md="12">
@@ -47,7 +47,7 @@ function Icons() {
                           {userRole === "Paciente" && (
                             <Link
                               class="btn btn-primary btn-round"
-                              to="/admin/icons/upload"
+                              to="/admin/file/upload"
                             >
                               + Adjuntar Archivo
                             </Link>
@@ -67,4 +67,4 @@ function Icons() {
   );
 }
 
-export default Icons;
+export default File;

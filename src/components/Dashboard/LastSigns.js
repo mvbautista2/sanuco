@@ -81,6 +81,8 @@ export default function LastSigns() {
         },
       }
     );
+    closeModalSigns();
+    window.location.reload(true);
     console.log(res);
   };
 

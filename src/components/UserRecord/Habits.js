@@ -94,6 +94,8 @@ export default function Habits() {
         },
       }
     );
+    closeModal();
+    window.location.reload(true);
     console.log(res);
   };
 

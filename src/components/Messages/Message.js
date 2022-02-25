@@ -7,11 +7,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import {
   Button,
   UncontrolledTooltip,
-  NavLink as ReactstrapNavLink,
-  Table,
-  Row,
-  Col,
-  CardBody,
 } from "reactstrap";
 
 const Message = () => {

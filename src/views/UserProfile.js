@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FileBase64 from "react-file-base64";
-import { size } from "lodash";
+import DatePicker from 'react-datepicker';
 
 import {
   Button,
@@ -32,7 +32,7 @@ function UserProfile() {
     address: "",
     phone: "",
     picture: "",
-    birthday: "",
+    birthday: new Date(),
     sex: "Mujer",
   });
 
@@ -66,6 +66,7 @@ function UserProfile() {
       const email = window.localStorage
         .getItem("UserFound")
         .replace(/['"]+/g, "");
+        console.log(todo.birthday);
       const formData = new FormData();
       formData.append("given_name", todo.given_name);
       formData.append("family_name", todo.family_name);
@@ -295,7 +296,7 @@ function UserProfile() {
                           type="date"
                           defaultValue={todo.birthday.toString()}
                           onChange={(e) =>
-                            setTodo({ ...todo, birthday: e.target.value })
+                            setTodo({ ...todo, birthday: new Date(e.target.value ).toISOString().split('T')[0] })
                           }
                         />
                       </FormGroup>
@@ -375,7 +376,9 @@ function UserProfile() {
                     </Col>
                     <Col>
                       <FormGroup>
-                        <label>Clic aquí para actualizar imagen de perfil</label>
+                        <label>
+                          Clic aquí para actualizar imagen de perfil
+                        </label>
                         <FileBase64
                           type="file"
                           multiple={false}

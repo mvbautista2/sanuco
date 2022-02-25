@@ -68,7 +68,7 @@ useEffect(() => {
       }
     );
 
-    history.push("/admin/icons/");
+    history.push("/admin/file/");
     console.log(res);
     notify("tc");
   };
@@ -90,12 +90,14 @@ useEffect(() => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
+              required
               className="form-control text-dark my-3"
               placeholder="Título del documento"
               onChange={(e) => setTitle(e.target.value)}
             />
             <input
               type="file"
+              required
               className="form-control text-dark"
               onChange={handleChange}
             />

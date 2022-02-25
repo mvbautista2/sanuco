@@ -92,6 +92,8 @@ export default function DemographicProfile() {
         },
       }
     );
+    closeModal();
+    window.location.reload(true);
     console.log(res);
   };
 
@@ -448,6 +450,7 @@ export default function DemographicProfile() {
                         <label>Peso que quisieras alcanzar</label>
                         <Input
                           type="number"
+                          step="0.01"
                           placeholder="kg"
                           onChange={(e) => setIdealWeight(e.target.value)}
                         />

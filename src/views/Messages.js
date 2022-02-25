@@ -3,7 +3,7 @@ import axios from "axios";
 import { size } from "lodash";
 import { Route, Switch, Link } from "react-router-dom";
 import MessageForm from "../components/Messages/MessageForm";
-import Message from "./Message";
+import Message from "../components/Messages/Message";
 // reactstrap components
 import {
   Card,

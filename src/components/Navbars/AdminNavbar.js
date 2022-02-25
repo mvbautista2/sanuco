@@ -22,9 +22,9 @@ import {
   ModalHeader,
 } from "reactstrap";
 
-import Recipes from "../../views/Recipes";
-import RecipeDetail from "../../views/RecipeDetail";
-import Notifications from "views/Notifications";
+import Recipes from "../Recipes/Recipes";
+import RecipeDetail from "../Recipes/RecipeDetail";
+import RecipesView from "views/Recipes";
 
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);

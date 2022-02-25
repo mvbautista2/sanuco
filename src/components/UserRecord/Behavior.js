@@ -110,6 +110,8 @@ export default function Behavior() {
         },
       }
     );
+    closeModal();
+    window.location.reload(true);
     console.log(res);
   };
 

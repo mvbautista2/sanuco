@@ -5,7 +5,7 @@ import { Card, CardBody, Row, Col } from "reactstrap";
 
 import RecipeDetail from "./RecipeDetail";
 
-const RecipesCategory = () => {
+const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
   const params = useParams();
   const history = useHistory();
@@ -13,7 +13,7 @@ const RecipesCategory = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `http://localhost:4000/api/recipes/category/${params.category}`
+        `http://localhost:4000/api/recipes/search/${params.ingredient}`
       );
       setRecipes(res.data);
     })();
@@ -71,4 +71,4 @@ const RecipesCategory = () => {
   );
 };
 
-export default RecipesCategory;
+export default Recipes;

@@ -6,7 +6,7 @@ import { Line } from "react-chartjs-2";
 import axios from "axios";
 import LastAntros from "../components/Dashboard/LastAntros";
 import LastSigns from "../components/Dashboard/LastSigns";
-import Message from "./Message";
+import Message from "../components/Messages/Message";
 
 // reactstrap components
 import {
