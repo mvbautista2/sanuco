@@ -182,7 +182,7 @@ function AdminNavbar(props) {
       >
         <ModalHeader>
           <Input
-            placeholder="SEARCH"
+            placeholder="Receta por ingrediente"
             value={search}
             type="text"
             onChange={(e) => setSearch(e.target.value)}

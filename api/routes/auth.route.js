@@ -3,6 +3,7 @@ import User from "../models/user.js";
 import pkg from "jsonwebtoken";
 const { jwt } = pkg;
 import { OAuth2Client } from "google-auth-library";
+import fetch from "node-fetch";
 import config from "../config.js";
 import Role from "../models/role.js";
 import { checkDuplicateUsernameOrEmail } from "../middlewares/verifySignup.js";
@@ -132,6 +133,53 @@ router.post("/api/googlelogin", async (req, res) => {
             }
           });
       }
+    });
+});
+
+router.post("/api/facebooklogin", async (req, res) => {
+  const { userID, accessToken } = req.body;
+  const roles = await Role.findOne({ name: "Ninguno" });
+  const role = roles._id;
+  console.log(role);
+  let urlGraphFacebook = `https://graph.facebook.com/${userID}/?fields=id,name,email,picture&access_token=${accessToken}`;
+  fetch(urlGraphFacebook, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then(async (response) => {
+      const { email, name, picture } = response;
+      User.findOne({ email })
+        .populate("role")
+        .exec((err, userFound) => {
+          if (userFound) {
+            const token = pkg.sign({ id: userFound._id }, config.SECRET, {
+              expiresIn: 86400,
+            });
+            res.status(200).json({ token, userFound });
+          } else {
+            const password = email + config.SECRET;
+            const userFound = new User({
+              given_name: name,
+              family_name: name,
+              email,
+              password,
+              picture: picture.data.url,
+              role,
+            });
+
+            const savedUser = userFound.save();
+            savedUser.then(function (result) {
+              const rest = result.populate("role");
+              rest.then(function (userFound) {
+                // console.log(userFound);
+                const token = pkg.sign({ id: savedUser._id }, config.SECRET, {
+                  expiresIn: 86400, //24 horas
+                });
+                res.status(200).json({ token, userFound });
+              });
+            });
+          }
+        });
     });
 });
 

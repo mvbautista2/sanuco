@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { GoogleLogin } from "react-google-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import {
   Modal,
   ModalHeader,
@@ -96,7 +97,8 @@ export default function LoginForm() {
       message: (
         <div>
           <div>
-            Usuario y/o Email<b> ya se encuentran registados</b> - Ingrese un usuario y/o email diferente
+            Usuario y/o Email<b> ya se encuentran registados</b> - Ingrese un
+            usuario y/o email diferente
           </div>
         </div>
       ),
@@ -106,7 +108,7 @@ export default function LoginForm() {
     };
     notificationAlertRef.current.notificationAlert(options);
   };
-  
+
   const [abierto, setAbierto] = useState(false);
   const [actualizarRol, setActualizarRol] = useState(false);
   const [role, setRole] = useState("Paciente");
@@ -271,6 +273,53 @@ export default function LoginForm() {
   const switchMode = () => {
     setIsSignUp(!isSignUp);
   };
+  const responseFacebook = async (res) => {
+    console.log(res);
+    axios({
+      method: "POST",
+      url: "http://localhost:4000/api/facebooklogin",
+      data: { accessToken: res.accessToken, userID: res.userID },
+    })
+    .then((res) => {
+      console.log("Facebok login success", res);
+      window.localStorage.setItem(
+        "LoggedNotAppUser",
+        JSON.stringify(res.data.token)
+      );
+      window.localStorage.setItem(
+        "Role",
+        JSON.stringify(res.data.userFound.role.name)
+      );
+      if (res.data.userFound.role.name === "Ninguno") {
+        window.localStorage.setItem(
+          "User",
+          JSON.stringify(res.data.userFound.email)
+        );
+        setActualizarRol(true);
+      }
+      if (res.data.userFound.role.name === "Paciente") {
+        window.localStorage.setItem(
+          "UserFound",
+          JSON.stringify(res.data.userFound.email)
+        );
+        notify("tl");
+        window.location.reload(true);
+      }
+      if (res.data.userFound.role.name === "Nutricionista") {
+        window.localStorage.setItem(
+          "Nutricionista",
+          JSON.stringify(res.data.userFound.email)
+        );
+        listarUsuarios();
+        setPacienteModal(true);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      notifyError("tl");
+    });
+  };
+
   const googleSuccess = async (res) => {
     console.log(res);
     axios({
@@ -489,6 +538,20 @@ export default function LoginForm() {
               <Button className="btn-fill" color="primary" type="submit">
                 {isSignUp ? "Guardar" : "Continuar"}
               </Button>
+              <FacebookLogin
+                appId="1037374753711484"
+                autoLoad={false}
+                callback={responseFacebook}
+                render={(renderProps) => (
+                  <Button
+                    className="btn-fill"
+                    color="info"
+                    onClick={renderProps.onClick}
+                  >
+                    Iniciar Sesión con Facebook
+                  </Button>
+                )}
+              />
               <GoogleLogin
                 clientId="362449996279-6tog3bo75fspopbn3dhf3fmjrt8s4lik.apps.googleusercontent.com"
                 buttonText="Iniciar Sesión con Google"

@@ -29,7 +29,8 @@
     "mongoose": "^6.1.7",
     "mongoose-date-format": "^1.2.0",
     "mongoose-dateonly": "^1.0.6",
-    "multer": "^1.4.4"
+    "multer": "^1.4.4",
+    "node-fetch": "^3.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.8",
