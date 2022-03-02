@@ -141,8 +141,7 @@ export default function LoginForm() {
       console.log(email);
 
       const res = await axios.put(
-        "https://sanuco-back-end-74qk6.ondigitalocean.app/api/auth/user/" +
-          email,
+        "https://sanuco.herokuapp.com/api/auth/user/" + email,
         formData,
         {
           headers: {
@@ -193,7 +192,7 @@ export default function LoginForm() {
         formData.append("role", role);
         emailVerification();
         const res = await axios.post(
-          "https://sanuco-back-end-74qk6.ondigitalocean.app/api/auth/signup",
+          "https://sanuco.herokuapp.com/api/auth/signup",
           formData,
           {
             headers: {
@@ -235,7 +234,7 @@ export default function LoginForm() {
         formData.append("password", password);
 
         const res = await axios.post(
-          "https://sanuco-back-end-74qk6.ondigitalocean.app/api/auth/signin",
+          "https://sanuco.herokuapp.com/api/auth/signin",
           formData,
           {
             headers: {
@@ -282,7 +281,7 @@ export default function LoginForm() {
     console.log(res);
     axios({
       method: "POST",
-      url: "https://sanuco-back-end-74qk6.ondigitalocean.app/api/verifyEmail",
+      url: "https://sanuco.herokuapp.com/api/verifyEmail",
       data: { email, api_key: hunter },
     }).then((res) => {
       console.log("El resultado", res);
@@ -292,7 +291,7 @@ export default function LoginForm() {
     console.log(res);
     axios({
       method: "POST",
-      url: "https://sanuco-back-end-74qk6.ondigitalocean.app/api/facebooklogin",
+      url: "https://sanuco.herokuapp.com/api/facebooklogin",
       data: { accessToken: res.accessToken, userID: res.userID },
     })
       .then((res) => {
@@ -339,7 +338,7 @@ export default function LoginForm() {
     console.log(res);
     axios({
       method: "POST",
-      url: "https://sanuco-back-end-74qk6.ondigitalocean.app/api/googlelogin",
+      url: "https://sanuco.herokuapp.com/api/googlelogin",
       data: { tokenId: res.tokenId },
     })
       .then((res) => {
@@ -388,7 +387,7 @@ export default function LoginForm() {
   const listarUsuarios = () => {
     axios({
       method: "GET",
-      url: "https://sanuco-back-end-74qk6.ondigitalocean.app/api/users/Paciente",
+      url: "https://sanuco.herokuapp.com/api/users/Paciente",
       headers: {
         token: window.localStorage
           .getItem("LoggedNotAppUser")

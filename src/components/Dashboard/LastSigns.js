@@ -39,7 +39,7 @@ export default function LastSigns() {
 
   useEffect(async () => {
     const res = await axios.get(
-      `https://sanuco-back-end-74qk6.ondigitalocean.app/api/vitalSigns/lastDate/${user}`
+      `https://sanuco.herokuapp.com/api/vitalSigns/lastDate/${user}`
     );
     setLastSigns(res.data[0]);
   }, [lastSigns]);
@@ -72,7 +72,7 @@ export default function LastSigns() {
     formData.append("user", user);
 
     const res = await axios.post(
-      "https://sanuco-back-end-74qk6.ondigitalocean.app/api/vitalSigns/createnew",
+      "https://sanuco.herokuapp.com/api/vitalSigns/createnew",
       formData,
       {
         headers: {

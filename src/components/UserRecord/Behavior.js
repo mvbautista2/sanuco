@@ -47,7 +47,7 @@ export default function Behavior() {
 
   useEffect(async () => {
     const res = await axios.get(
-      `https://sanuco-back-end-74qk6.ondigitalocean.app/api/behavior/lastDate/${user}`
+      `https://sanuco.herokuapp.com/api/behavior/lastDate/${user}`
     );
 
     setLastBehavior(res.data[0]);
@@ -102,7 +102,7 @@ export default function Behavior() {
     formData.append("animoPorPeso", animoPorPeso);
 
     const res = await axios.post(
-      "https://sanuco-back-end-74qk6.ondigitalocean.app/api/behavior/createnew",
+      "https://sanuco.herokuapp.com/api/behavior/createnew",
       formData,
       {
         headers: {

@@ -87,7 +87,7 @@ function AdminNavbar(props) {
       .getItem("UserFound")
       .replace(/['"]+/g, "");
     const res = await axios.get(
-      `https://sanuco-back-end-74qk6.ondigitalocean.app/api/userInfo/${email}`
+      `https://sanuco.herokuapp.com/api/userInfo/${email}`
     );
     setUserInfo(res.data[0]);
   }, [userInfo]);

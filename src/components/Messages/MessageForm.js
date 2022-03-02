@@ -62,7 +62,7 @@ const MessageForm = () => {
     formData.append("nutricionista", nutricionista);
 
     const res = await axios.post(
-      "https://sanuco-back-end-74qk6.ondigitalocean.app/api/messages/createnew",
+      "https://sanuco.herokuapp.com/api/messages/createnew",
       formData,
       {
         headers: {

@@ -39,7 +39,7 @@ export default function Habits() {
 
   useEffect(async () => {
     const res = await axios.get(
-      `https://sanuco-back-end-74qk6.ondigitalocean.app/api/habits/lastDate/${user}`
+      `https://sanuco.herokuapp.com/api/habits/lastDate/${user}`
     );
 
     setLastHabits(res.data[0]);
@@ -86,7 +86,7 @@ export default function Habits() {
     formData.append("alcohol", alcohol);
 
     const res = await axios.post(
-      "https://sanuco-back-end-74qk6.ondigitalocean.app/api/habits/createnew",
+      "https://sanuco.herokuapp.com/api/habits/createnew",
       formData,
       {
         headers: {
