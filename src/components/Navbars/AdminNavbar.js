@@ -149,7 +149,7 @@ function AdminNavbar(props) {
                   "/admin/file/upload" ? null : location.pathname ===
                     "/admin/training" ||
                   location.pathname ===
-                    "/admin/training/videos/category/calentamiento " ||
+                    "/admin/training/videos/category/calentamiento" ||
                   location.pathname ===
                     "/admin/training/videos/category/entrenamiento" ||
                   location.pathname ===
