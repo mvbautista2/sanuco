@@ -42,7 +42,7 @@ export const RecipeDetail = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `https://sanucobackend.herokuapp.com/api/recipes/${params.id}`
+        `https://sanuco-back-end-74qk6.ondigitalocean.app/api/recipes/${params.id}`
       );
       //console.log(res.data.info[0]);
       setRecipe(res.data);

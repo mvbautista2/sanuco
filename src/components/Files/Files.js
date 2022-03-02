@@ -15,7 +15,7 @@ const Files = () => {
 
   useEffect(async () => {
     const res = await axios.get(
-      `https://sanucobackend.herokuapp.com/api/files/${user}`
+      `https://sanuco-back-end-74qk6.ondigitalocean.app/api/files/${user}`
     );
     setFiles(res.data);
   }, [files]);
@@ -63,7 +63,7 @@ const Files = () => {
                         type="button"
                         onClick={async () => {
                           const res = await axios.delete(
-                            "https://sanucobackend.herokuapp.com/api/files/" +
+                            "https://sanuco-back-end-74qk6.ondigitalocean.app/api/files/" +
                               file._id
                           );
                           console.log(res);

@@ -38,7 +38,7 @@ const Message = () => {
 
   useEffect(async () => {
     const res = await axios.get(
-      `https://sanucobackend.herokuapp.com/api/messages/${user}`
+      `https://sanuco-back-end-74qk6.ondigitalocean.app/api/messages/${user}`
     );
     setMessages(res.data);
   }, [messages]);
@@ -72,7 +72,7 @@ const Message = () => {
                     type="button"
                     onClick={async () => {
                       const res = await axios.delete(
-                        "https://sanucobackend.herokuapp.com/api/messages/" +
+                        "https://sanuco-back-end-74qk6.ondigitalocean.app/api/messages/" +
                           message._id
                       );
                       console.log(res);

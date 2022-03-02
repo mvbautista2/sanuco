@@ -32,7 +32,7 @@ export default function Anamnesis() {
 
   useEffect(async () => {
     const res = await axios.get(
-      `https://sanucobackend.herokuapp.com/api/anamnesis/lastDate/${user}`
+      `https://sanuco-back-end-74qk6.ondigitalocean.app/api/anamnesis/lastDate/${user}`
     );
 
     setLastAnamnesis(res.data[0]);
@@ -71,7 +71,7 @@ export default function Anamnesis() {
     formData.append("user", user);
 
     const res = await axios.post(
-      "https://sanucobackend.herokuapp.com/api/anamnesis/createnew",
+      "https://sanuco-back-end-74qk6.ondigitalocean.app/api/anamnesis/createnew",
       formData,
       {
         headers: {
