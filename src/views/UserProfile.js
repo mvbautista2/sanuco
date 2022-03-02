@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FileBase64 from "react-file-base64";
-import DatePicker from 'react-datepicker';
+import DatePicker, { ReactDatePicker } from "react-datepicker";
 
 import {
   Button,
@@ -20,6 +20,7 @@ import {
   ModalHeader,
   ModalFooter,
 } from "reactstrap";
+import { ISO_8601 } from "moment";
 
 function UserProfile() {
   const [userRole, setUserRole] = useState(null);
@@ -32,7 +33,7 @@ function UserProfile() {
     address: "",
     phone: "",
     picture: "",
-    birthday: new Date(),
+    birthday: "",
     sex: "Mujer",
   });
 
@@ -66,7 +67,7 @@ function UserProfile() {
       const email = window.localStorage
         .getItem("UserFound")
         .replace(/['"]+/g, "");
-        console.log(todo.birthday);
+      console.log(todo.birthday);
       const formData = new FormData();
       formData.append("given_name", todo.given_name);
       formData.append("family_name", todo.family_name);
@@ -134,7 +135,13 @@ function UserProfile() {
                         <Input
                           type="text"
                           disabled
-                          defaultValue={userInfo.birthday}
+                          value={new Date(userInfo.birthday).toUTCString()}
+                          // value={`${new Date(userInfo.birthday).getUTCDay()}/${new Date(userInfo.birthday).getUTCMonth()}/${new Date(userInfo.birthday).getUTCFullYear()}`}
+                          // value={new Date(
+                          //   userInfo.birthday
+                          // ).getFullYear(), "/" ,new Date(
+                          //   userInfo.birthday
+                          // ).getMonth() }
                         />
                       </FormGroup>
                     </Col>
@@ -294,11 +301,29 @@ function UserProfile() {
                         <label>Fecha de nacimiento</label>
                         <Input
                           type="date"
-                          defaultValue={todo.birthday.toString()}
+                          defaultValue="2022-02-20"
+                          min="1922-01-01"
+                          max="2022-01-01"
                           onChange={(e) =>
-                            setTodo({ ...todo, birthday: new Date(e.target.value ).toISOString().split('T')[0] })
+                            setTodo({
+                              ...todo,
+                              birthday : new Date(e.target.value)
+                            })
                           }
-                        />
+                        ></Input>
+                        
+                        {/* <Input
+                          type="date"
+                          defaultValue={new Date(todo.birthday).toLocaleDateString()}
+                          onChange={(e) =>
+                            setTodo({
+                              ...todo,
+                              birthday: new Date(e.target.value)
+                                .toISOString()
+                                .split("T")[0],
+                            })
+                          }
+                        /> */}
                       </FormGroup>
                     </Col>
                     <Col className="px-md-1" md="3">
@@ -352,7 +377,8 @@ function UserProfile() {
                       <FormGroup>
                         <label>Teléfono</label>
                         <Input
-                          type="number"
+                          type="tel"
+                          pattern="^[0-9]{9,10}$"
                           required
                           defaultValue={todo.phone}
                           onChange={(e) =>

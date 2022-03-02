@@ -42,7 +42,6 @@ export default function LastSigns() {
       `http://localhost:4000/api/vitalSigns/lastDate/${user}`
     );
     setLastSigns(res.data[0]);
-   
   }, [lastSigns]);
 
   useEffect(() => {
@@ -95,64 +94,106 @@ export default function LastSigns() {
           </CardHeader>
           <CardBody>
             <Row>
-            {size(lastSigns) === 0 ? (
-            <>
-            <Col className="pr-md-1" md="12">
-            <h5>Aún no se han registrado signos vitales</h5>
-            </Col>
-              
-            </>
-          ) : (
-              <>
-              <Col className="pr-md-1" md="3">
-                <FormGroup>
-                  <label>Temperatura</label>
-                  <Input placeholder="ºC" type="number" step="0.01" disabled value={lastSigns.temperatura === null ? 0 : lastSigns.temperatura}/>
-                </FormGroup>
-              </Col>
-              <Col className="pr-md-1" md="4">
-                <FormGroup>
-                  <label>Frecuencia Cardiaca</label>
-                  <Input
-                    placeholder="Latidos por minuto"
-                    type="number"
-                    disabled
-                    value={lastSigns.frecuenciaCardiaca === null ? 0 : lastSigns.frecuenciaCardiaca}
-                  />
-                </FormGroup>
-              </Col>
-              <Col className="pr-md-1" md="4">
-                <FormGroup>
-                  <label>Frecuencia Respiratoria</label>
-                  <Input
-                    placeholder="Respiraciones por minuto"
-                    type="number"
-                    disabled
-                    value={lastSigns.frecuenciaRespiratoria === null ? 0 : lastSigns.frecuenciaRespiratoria}
-                  />
-                </FormGroup>
-              </Col>
-              <Col className="pr-md-1" md="3">
-                <FormGroup>
-                  <label>Sistólica</label>
-                  <Input placeholder="mmHg" type="number" disabled value={lastSigns.sistolica === null ? 0 : lastSigns.sistolica} />
-                </FormGroup>
-              </Col>
-              <Col className="pr-md-1" md="3">
-                <FormGroup>
-                  <label>Diastólica</label>
-                  <Input placeholder="mmHg" type="number" disabled value={lastSigns.diastolica === null ? 0 : lastSigns.diastolica}/>
-                </FormGroup>
-              </Col>
+              {size(lastSigns) === 0 ? (
+                <>
+                  <Col className="pr-md-1" md="12">
+                    <h5>Aún no se han registrado signos vitales</h5>
+                  </Col>
+                </>
+              ) : (
+                <>
+                  <Col className="pr-md-1" md="3">
+                    <FormGroup>
+                      <label>Temperatura</label>
+                      <Input
+                        placeholder="ºC"
+                        type="number"
+                        step="0.01"
+                        disabled
+                        value={
+                          lastSigns.temperatura === null
+                            ? 0
+                            : lastSigns.temperatura
+                        }
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col className="pr-md-1" md="4">
+                    <FormGroup>
+                      <label>Frecuencia Cardiaca</label>
+                      <Input
+                        placeholder="Latidos por minuto"
+                        type="number"
+                        disabled
+                        value={
+                          lastSigns.frecuenciaCardiaca === null
+                            ? 0
+                            : lastSigns.frecuenciaCardiaca
+                        }
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col className="pr-md-1" md="4">
+                    <FormGroup>
+                      <label>Frecuencia Respiratoria</label>
+                      <Input
+                        placeholder="Respiraciones por minuto"
+                        type="number"
+                        disabled
+                        value={
+                          lastSigns.frecuenciaRespiratoria === null
+                            ? 0
+                            : lastSigns.frecuenciaRespiratoria
+                        }
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col className="pr-md-1" md="3">
+                    <FormGroup>
+                      <label>Sistólica</label>
+                      <Input
+                        placeholder="mmHg"
+                        type="number"
+                        disabled
+                        value={
+                          lastSigns.sistolica === null ? 0 : lastSigns.sistolica
+                        }
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col className="pr-md-1" md="3">
+                    <FormGroup>
+                      <label>Diastólica</label>
+                      <Input
+                        placeholder="mmHg"
+                        type="number"
+                        disabled
+                        value={
+                          lastSigns.diastolica === null
+                            ? 0
+                            : lastSigns.diastolica
+                        }
+                      />
+                    </FormGroup>
+                  </Col>
 
-              <Col className="pr-md-1" md="5">
-                <FormGroup>
-                  <label>Saturación de oxígeno</label>
-                  <Input placeholder="00" type="number  " disabled value={lastSigns.saturacionOxigeno === null ? 0 : lastSigns.saturacionOxigeno} />
-                </FormGroup>
-              </Col>
-              </>
-          )}
+                  <Col className="pr-md-1" md="5">
+                    <FormGroup>
+                      <label>Saturación de oxígeno</label>
+                      <Input
+                        placeholder="00"
+                        type="number  "
+                        disabled
+                        value={
+                          lastSigns.saturacionOxigeno === null
+                            ? 0
+                            : lastSigns.saturacionOxigeno
+                        }
+                      />
+                    </FormGroup>
+                  </Col>
+                </>
+              )}
             </Row>
           </CardBody>
 
@@ -194,6 +235,8 @@ export default function LastSigns() {
                           placeholder="ºC"
                           type="number"
                           step="0.01"
+                          min="1"
+                          pattern="^[0-9]+"
                           onChange={(e) => setTemperatura(e.target.value)}
                         />
                       </FormGroup>
@@ -204,6 +247,8 @@ export default function LastSigns() {
                         <Input
                           placeholder="Latidos por minuto"
                           type="number"
+                          min="1"
+                          pattern="^[0-9]+"
                           onChange={(e) =>
                             setFrecuenciaCardiaca(e.target.value)
                           }
@@ -216,6 +261,8 @@ export default function LastSigns() {
                         <Input
                           placeholder="Respiraciones por minuto"
                           type="number"
+                          min="1"
+                          pattern="^[0-9]+"
                           onChange={(e) =>
                             setFrecuenciaRespiratoria(e.target.value)
                           }
@@ -228,6 +275,8 @@ export default function LastSigns() {
                         <Input
                           placeholder="mmHg"
                           type="number"
+                          min="1"
+                          pattern="^[0-9]+"
                           onChange={(e) => setSistolica(e.target.value)}
                         />
                       </FormGroup>
@@ -238,6 +287,8 @@ export default function LastSigns() {
                         <Input
                           placeholder="mmHg"
                           type="number"
+                          min="1"
+                          pattern="^[0-9]+"
                           onChange={(e) => setDiastolica(e.target.value)}
                         />
                       </FormGroup>
@@ -248,7 +299,9 @@ export default function LastSigns() {
                         <label>Saturación de oxígeno</label>
                         <Input
                           placeholder="00"
-                          type="number  "
+                          type="number"
+                          min="1"
+                          pattern="^[0-9]+"
                           onChange={(e) => setSaturacionOxigeno(e.target.value)}
                         />
                       </FormGroup>

@@ -27,6 +27,7 @@ const UserSchema = new Schema(
     address: String,
     phone: String,
     sex: String,
+    verified: Boolean,
   },
   {
     timestamps: true,

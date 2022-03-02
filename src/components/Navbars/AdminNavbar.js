@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useLocation, useHistory } from "react-router-dom";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 import axios from "axios";
-import { useHistory, useLocation } from "react-router-dom";
 
 // reactstrap components
 import {
@@ -24,11 +23,12 @@ import {
 
 import Recipes from "../Recipes/Recipes";
 import RecipeDetail from "../Recipes/RecipeDetail";
-import RecipesView from "views/Recipes";
+import Videos from "../Training/Videos";
 
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
+  const [modalSearchTraining, setmodalSearchTraining] = React.useState(false);
   const [user, setUser] = useState(null);
   const [userInfo, setUserInfo] = useState("");
   const [color, setcolor] = React.useState("navbar-transparent");
@@ -37,6 +37,9 @@ function AdminNavbar(props) {
   const page = query.get("page") || 1;
   const searchQuery = query.get("searchQuery");
   const [search, setSearch] = useState("");
+  const [searchTraining, setSearchTraining] = useState("");
+  const location = useLocation();
+
   React.useEffect(() => {
     window.addEventListener("resize", updateColor);
     // Specify how to clean up after this effect:
@@ -44,7 +47,6 @@ function AdminNavbar(props) {
       window.removeEventListener("resize", updateColor);
     };
   });
-
   function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
@@ -71,30 +73,21 @@ function AdminNavbar(props) {
     setmodalSearch(!modalSearch);
   };
 
+  const toggleModalSearchTraining = () => {
+    setmodalSearchTraining(!modalSearchTraining);
+  };
+
   const handleLogout = () => {
     window.localStorage.clear();
     window.location.reload(true);
   };
 
-  // useEffect(() => {
-  //   const email = window.localStorage.getItem("UserFound");
-  //   if (email) {
-  //     const user = JSON.parse(email);
-  //     setUser(user);
-  //   }
-  // }, []);
-
   useEffect(async () => {
     const email = window.localStorage
       .getItem("UserFound")
       .replace(/['"]+/g, "");
-    // if (email) {
-    //   const user = JSON.parse(email);
-    //   setUser(user);
-    // }
     const res = await axios.get(`http://localhost:4000/api/userInfo/${email}`);
     setUserInfo(res.data[0]);
-    // console.log(res.data[0]);
   }, [userInfo]);
 
   return (
@@ -108,6 +101,11 @@ function AdminNavbar(props) {
         <Route
           path="/admin/recipes/recipes/:id"
           component={RecipeDetail}
+          exact
+        />
+        <Route
+          path="/admin/training/videos/search/:type"
+          component={Videos}
           exact
         />
       </Switch>
@@ -136,12 +134,54 @@ function AdminNavbar(props) {
           </NavbarToggler>
           <Collapse navbar isOpen={collapseOpen}>
             <Nav className="ml-auto" navbar>
-              <InputGroup className="search-bar">
-                <Button color="link" onClick={toggleModalSearch}>
-                  <i className="tim-icons icon-zoom-split" />
-                  <span className="d-lg-none d-md-block">Search</span>
-                </Button>
-              </InputGroup>
+              {
+                // we don't want the search in all views only recipes
+
+                location.pathname === "/admin/dashboard" ||
+                location.pathname === "/admin/file" ||
+                location.pathname === "/admin/user-profile" ||
+                location.pathname === "/admin/messages" ||
+                location.pathname === "/admin/messages/createnew" ||
+                location.pathname === "/admin/record" ||
+                location.pathname ===
+                  "/admin/file/upload" ? null : location.pathname ===
+                    "/admin/training" ||
+                  location.pathname ===
+                    "/admin/training/videos/category/calentamiento " ||
+                  location.pathname ===
+                    "/admin/training/videos/category/entrenamiento" ||
+                  location.pathname ===
+                    "/admin/training/videos/category/estiramiento" ||
+                    location.pathname ===
+                    "/admin/training/videos/search/yoga" ||
+                    location.pathname ===
+                    "/admin/training/videos/search/cardio" ||
+                    location.pathname ===
+                    "/admin/training/videos/search/pilates" ||
+                    location.pathname ===
+                    "/admin/training/videos/search/crossfit" ||
+                    location.pathname ===
+                    "/admin/training/videos/search/resistencia" ||
+                    location.pathname ===
+                    "/admin/training/videos/search/bailoterapia"
+                    ? (
+                  <InputGroup className="search-bar">
+                    <Button color="link" onClick={toggleModalSearchTraining}>
+                      <i className="tim-icons icon-zoom-split" />
+                      <span className="d-lg-none d-md-block">
+                        Buscar ejercicio por tipo
+                      </span>
+                    </Button>
+                  </InputGroup>
+                ) : (
+                  <InputGroup className="search-bar">
+                    <Button color="link" onClick={toggleModalSearch}>
+                      <i className="tim-icons icon-zoom-split" />
+                      <span className="d-lg-none d-md-block">Search</span>
+                    </Button>
+                  </InputGroup>
+                )
+              }
 
               <UncontrolledDropdown nav>
                 <DropdownToggle
@@ -192,6 +232,29 @@ function AdminNavbar(props) {
             className="close"
             onClick={() =>
               history.push(`/admin/recipes/recipes/search/${search}`)
+            }
+          >
+            <i className="tim-icons icon-zoom-split" />
+          </button>
+        </ModalHeader>
+      </Modal>
+      <Modal
+        modalClassName="modal-search"
+        isOpen={modalSearchTraining}
+        toggle={toggleModalSearchTraining}
+      >
+        <ModalHeader>
+          <Input
+            placeholder="Buscar ejercicio"
+            value={searchTraining}
+            type="text"
+            onChange={(e) => setSearchTraining(e.target.value)}
+          />
+          <button
+            aria-label="Close"
+            className="close"
+            onClick={() =>
+              history.push(`/admin/training/videos/search/${searchTraining}`)
             }
           >
             <i className="tim-icons icon-zoom-split" />

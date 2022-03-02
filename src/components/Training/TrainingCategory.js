@@ -26,9 +26,6 @@ const TrainingCategory = () => {
             <div className="col-md-6 p-6">
               <div
                 className="card bg-secondary"
-                onClick={() =>
-                  history.push(`/admin/training/videos/${video._id}`)
-                }
                 key={video._id}
                 type="submit"
               >

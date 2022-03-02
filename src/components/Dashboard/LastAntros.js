@@ -246,6 +246,8 @@ export default function LastAntros() {
                           placeholder="m"
                           type="number"
                           step="0.01"
+                          min="1"
+                          pattern="^[0-9]+"
                           onChange={(e) => setEstatura(e.target.value)}
                         />
                       </FormGroup>
@@ -258,6 +260,8 @@ export default function LastAntros() {
                           placeholder="kg"
                           type="number"
                           step="0.01"
+                          min="1"
+                          pattern="^[0-9]+"
                           onChange={(e) => setPeso(e.target.value)}
                         />
                       </FormGroup>
@@ -270,6 +274,7 @@ export default function LastAntros() {
                           type="number"
                           placeholder="kg/m2"
                           step="0.01"
+                          
                         />
                       </FormGroup>
                     </Col>
@@ -281,6 +286,8 @@ export default function LastAntros() {
                           placeholder="cm"
                           type="number"
                           step="0.01"
+                          min="1"
+                          pattern="^[0-9]+"
                           onChange={(e) => setCintura(e.target.value)}
                         />
                       </FormGroup>
@@ -292,6 +299,8 @@ export default function LastAntros() {
                           required
                           placeholder="cm"
                           type="number"
+                          min="1"
+                          pattern="^[0-9]+"
                           onChange={(e) => setCadera(e.target.value)}
                         />
                       </FormGroup>

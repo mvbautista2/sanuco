@@ -336,6 +336,8 @@ export default function DemographicProfile() {
                               <label>Duración de tu período menstrual</label>
                               <Input
                                 type="number"
+                                min="1"
+                                pattern="^[0-9]+"
                                 placeholder="Días"
                                 onChange={(e) =>
                                   setDurationPeriodoMenstrual(e.target.value)
@@ -347,6 +349,8 @@ export default function DemographicProfile() {
                               <Input
                                 type="number"
                                 placeholder="Días"
+                                min="1"
+                                pattern="^[0-9]+"
                                 onChange={(e) =>
                                   setDurationCycloMenstrual(e.target.value)
                                 }
@@ -451,6 +455,8 @@ export default function DemographicProfile() {
                         <Input
                           type="number"
                           step="0.01"
+                          min="1"
+                          pattern="^[0-9]+"
                           placeholder="kg"
                           onChange={(e) => setIdealWeight(e.target.value)}
                         />

@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { GoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import EmailHunter from "hunter.io";
 import {
   Modal,
   ModalHeader,
@@ -123,6 +124,7 @@ export default function LoginForm() {
   const [pacientesList, setPacientesList] = useState([]);
   const [isSignUp, setIsSignUp] = useState(false);
   const history = useHistory();
+  const hunter = new EmailHunter("2dbaa17d9ba8a731d0ffb755ac017c1dd256bb35");
 
   const openModal = () => {
     setAbierto(true);
@@ -188,6 +190,7 @@ export default function LoginForm() {
         formData.append("email", email);
         formData.append("birthday", fechaNacimiento);
         formData.append("role", role);
+        emailVerification();
         const res = await axios.post(
           "http://localhost:4000/api/auth/signup",
           formData,
@@ -273,6 +276,17 @@ export default function LoginForm() {
   const switchMode = () => {
     setIsSignUp(!isSignUp);
   };
+
+  const emailVerification = async (res) => {
+    console.log(res);
+    axios({
+      method: "POST",
+      url: "http://localhost:4000/api/verifyEmail",
+      data: { email, api_key: hunter },
+    }).then((res) => {
+      console.log("El resultado", res);
+    });
+  };
   const responseFacebook = async (res) => {
     console.log(res);
     axios({
@@ -280,44 +294,44 @@ export default function LoginForm() {
       url: "http://localhost:4000/api/facebooklogin",
       data: { accessToken: res.accessToken, userID: res.userID },
     })
-    .then((res) => {
-      console.log("Facebok login success", res);
-      window.localStorage.setItem(
-        "LoggedNotAppUser",
-        JSON.stringify(res.data.token)
-      );
-      window.localStorage.setItem(
-        "Role",
-        JSON.stringify(res.data.userFound.role.name)
-      );
-      if (res.data.userFound.role.name === "Ninguno") {
+      .then((res) => {
+        console.log("Facebok login success", res);
         window.localStorage.setItem(
-          "User",
-          JSON.stringify(res.data.userFound.email)
+          "LoggedNotAppUser",
+          JSON.stringify(res.data.token)
         );
-        setActualizarRol(true);
-      }
-      if (res.data.userFound.role.name === "Paciente") {
         window.localStorage.setItem(
-          "UserFound",
-          JSON.stringify(res.data.userFound.email)
+          "Role",
+          JSON.stringify(res.data.userFound.role.name)
         );
-        notify("tl");
-        window.location.reload(true);
-      }
-      if (res.data.userFound.role.name === "Nutricionista") {
-        window.localStorage.setItem(
-          "Nutricionista",
-          JSON.stringify(res.data.userFound.email)
-        );
-        listarUsuarios();
-        setPacienteModal(true);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-      notifyError("tl");
-    });
+        if (res.data.userFound.role.name === "Ninguno") {
+          window.localStorage.setItem(
+            "User",
+            JSON.stringify(res.data.userFound.email)
+          );
+          setActualizarRol(true);
+        }
+        if (res.data.userFound.role.name === "Paciente") {
+          window.localStorage.setItem(
+            "UserFound",
+            JSON.stringify(res.data.userFound.email)
+          );
+          notify("tl");
+          window.location.reload(true);
+        }
+        if (res.data.userFound.role.name === "Nutricionista") {
+          window.localStorage.setItem(
+            "Nutricionista",
+            JSON.stringify(res.data.userFound.email)
+          );
+          listarUsuarios();
+          setPacienteModal(true);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        notifyError("tl");
+      });
   };
 
   const googleSuccess = async (res) => {
@@ -480,6 +494,7 @@ export default function LoginForm() {
                             type="email"
                             value={email}
                             name="email"
+                            pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
                             required
                             onChange={(e) => setEmail(e.currentTarget.value)}
                           />

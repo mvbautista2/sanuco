@@ -8,4 +8,9 @@ router.get("/api/videos/:category", async (req, res) => {
   return res.json(video);
 });
 
+router.get("/api/videos/search/:type", async (req, res) => {
+  const videoType = await Video.find({ type: req.params.type });
+  return res.json(videoType);
+});
+
 export default router;

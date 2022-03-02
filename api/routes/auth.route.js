@@ -1,5 +1,6 @@
 import { Router } from "express";
 import User from "../models/user.js";
+import { transporter } from "../middlewares/mailer.js";
 import pkg from "jsonwebtoken";
 const { jwt } = pkg;
 import { OAuth2Client } from "google-auth-library";
@@ -51,6 +52,7 @@ router.post(
       address,
       phone,
       sex,
+      verified,
     } = req.body;
 
     const newUser = new User({
@@ -63,6 +65,7 @@ router.post(
       address,
       phone,
       sex,
+      verified: false,
       password: await User.encryptPassword(password),
     });
 
@@ -79,7 +82,22 @@ router.post(
     const token = pkg.sign({ id: userFound._id }, config.SECRET, {
       expiresIn: 86400, //24 horas
     });
-    res.status(200).json({ token, userFound });
+    res.status(200).json({ token, userFound });   
+
+    // try {
+    //   verificationLink = `http:localhost:3000/admin/verify/${token}`;
+    //   await transporter.sendMail({
+    //     from: '"Sanuco"<valentina1999bautista@gmail.com>',
+    //     to: userFound.email,
+    //     subjet: "Verificación de correo electrónico",
+    //     html: `
+    //     <b> Por favor da clic en el siguiente enlace o copialo en tu navegador para continuar en Sanuco: </b>
+    //     <a href="${verificationLink}">Enlace de verificación</a>
+    //     `,
+    //   });
+    // } catch (error) {
+    //   // return res.status(400).json({ message: "Algo ha salido mal" });
+    // }
   }
 );
 

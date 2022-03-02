@@ -46,10 +46,5 @@ var routesNutricionista = [
     component: UserRecord,
     layout: "/admin",
   },
-  {
-    path: "/recipes",
-    component: Recipes,
-    layout: "/admin",
-  },
 ];
 export default routesNutricionista;

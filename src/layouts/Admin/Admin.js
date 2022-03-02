@@ -74,7 +74,7 @@ function Admin(props) {
     }
     return null;
   };
-  return token && roleUser === "Paciente" ? (
+  return user && token && roleUser === "Paciente" ? (
     <>
       <BackgroundColorContext.Consumer>
         {({ color }) => (
@@ -109,7 +109,7 @@ function Admin(props) {
         )}
       </BackgroundColorContext.Consumer>
     </>
-  ) : token && roleUser === "Nutricionista" ? (
+  ) : user && token && roleUser === "Nutricionista" ? (
     <>
       <BackgroundColorContext.Consumer>
         {({ color }) => (
@@ -134,10 +134,6 @@ function Admin(props) {
                   {getRoutes(routes)}
                   <Redirect from="*" to="/admin/dashboard" />
                 </Switch>
-                {
-                  // we don't want the Footer to be rendered on map page
-                  location.pathname === "/admin/maps" ? null : <Footer fluid />
-                }
               </div>
             </div>
           </React.Fragment>

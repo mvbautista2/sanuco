@@ -6,6 +6,7 @@ const VideoSchema = new Schema({
     title: String,
     category: String,
     url: String,
+    type: String,
 });
 
 export default model("Video", VideoSchema);
