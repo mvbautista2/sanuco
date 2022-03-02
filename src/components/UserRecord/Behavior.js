@@ -47,7 +47,7 @@ export default function Behavior() {
 
   useEffect(async () => {
     const res = await axios.get(
-      `http://localhost:4000/api/behavior/lastDate/${user}`
+      `https://sanucobackend.herokuapp.com/api/behavior/lastDate/${user}`
     );
 
     setLastBehavior(res.data[0]);
@@ -102,7 +102,7 @@ export default function Behavior() {
     formData.append("animoPorPeso", animoPorPeso);
 
     const res = await axios.post(
-      "http://localhost:4000/api/behavior/createnew",
+      "https://sanucobackend.herokuapp.com/api/behavior/createnew",
       formData,
       {
         headers: {
@@ -470,8 +470,7 @@ export default function Behavior() {
                               ? "Significa que usted está sufriendo de un desorden alimentario del tipo del comedor compulsivo o bulimia. Es urgente que consiga ayuda profesional."
                               : ""
                           }
-                        >
-                        </Input>
+                        ></Input>
                       </FormGroup>
                     </Col>
                   ) : (

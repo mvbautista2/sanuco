@@ -4,10 +4,7 @@ import { size } from "lodash";
 
 import { useAuth0 } from "@auth0/auth0-react";
 
-import {
-  Button,
-  UncontrolledTooltip,
-} from "reactstrap";
+import { Button, UncontrolledTooltip } from "reactstrap";
 
 const Message = () => {
   const [messages, setMessages] = useState([]);
@@ -40,7 +37,9 @@ const Message = () => {
   }, []);
 
   useEffect(async () => {
-    const res = await axios.get(`http://localhost:4000/api/messages/${user}`);
+    const res = await axios.get(
+      `https://sanucobackend.herokuapp.com/api/messages/${user}`
+    );
     setMessages(res.data);
   }, [messages]);
 
@@ -73,7 +72,8 @@ const Message = () => {
                     type="button"
                     onClick={async () => {
                       const res = await axios.delete(
-                        "http://localhost:4000/api/messages/" + message._id
+                        "https://sanucobackend.herokuapp.com/api/messages/" +
+                          message._id
                       );
                       console.log(res);
                     }}

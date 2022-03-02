@@ -39,7 +39,7 @@ export default function Habits() {
 
   useEffect(async () => {
     const res = await axios.get(
-      `http://localhost:4000/api/habits/lastDate/${user}`
+      `https://sanucobackend.herokuapp.com/api/habits/lastDate/${user}`
     );
 
     setLastHabits(res.data[0]);
@@ -86,7 +86,7 @@ export default function Habits() {
     formData.append("alcohol", alcohol);
 
     const res = await axios.post(
-      "http://localhost:4000/api/habits/createnew",
+      "https://sanucobackend.herokuapp.com/api/habits/createnew",
       formData,
       {
         headers: {

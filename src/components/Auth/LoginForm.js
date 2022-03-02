@@ -141,7 +141,7 @@ export default function LoginForm() {
       console.log(email);
 
       const res = await axios.put(
-        "http://localhost:4000/api/auth/user/" + email,
+        "https://sanucobackend.herokuapp.com/api/auth/user/" + email,
         formData,
         {
           headers: {
@@ -192,7 +192,7 @@ export default function LoginForm() {
         formData.append("role", role);
         emailVerification();
         const res = await axios.post(
-          "http://localhost:4000/api/auth/signup",
+          "https://sanucobackend.herokuapp.com/api/auth/signup",
           formData,
           {
             headers: {
@@ -234,7 +234,7 @@ export default function LoginForm() {
         formData.append("password", password);
 
         const res = await axios.post(
-          "http://localhost:4000/api/auth/signin",
+          "https://sanucobackend.herokuapp.com/api/auth/signin",
           formData,
           {
             headers: {
@@ -281,7 +281,7 @@ export default function LoginForm() {
     console.log(res);
     axios({
       method: "POST",
-      url: "http://localhost:4000/api/verifyEmail",
+      url: "https://sanucobackend.herokuapp.com/api/verifyEmail",
       data: { email, api_key: hunter },
     }).then((res) => {
       console.log("El resultado", res);
@@ -291,7 +291,7 @@ export default function LoginForm() {
     console.log(res);
     axios({
       method: "POST",
-      url: "http://localhost:4000/api/facebooklogin",
+      url: "https://sanucobackend.herokuapp.com/api/facebooklogin",
       data: { accessToken: res.accessToken, userID: res.userID },
     })
       .then((res) => {
@@ -338,7 +338,7 @@ export default function LoginForm() {
     console.log(res);
     axios({
       method: "POST",
-      url: "http://localhost:4000/api/googlelogin",
+      url: "https://sanucobackend.herokuapp.com/api/googlelogin",
       data: { tokenId: res.tokenId },
     })
       .then((res) => {
@@ -387,7 +387,7 @@ export default function LoginForm() {
   const listarUsuarios = () => {
     axios({
       method: "GET",
-      url: "http://localhost:4000/api/users/Paciente",
+      url: "https://sanucobackend.herokuapp.com/api/users/Paciente",
       headers: {
         token: window.localStorage
           .getItem("LoggedNotAppUser")

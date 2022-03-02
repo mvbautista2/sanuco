@@ -9,15 +9,15 @@ const FileForm = () => {
   const [title, setTitle] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [loading, setLoading] = useState(false);
-  
-const [user, setUser] = useState(null);
-useEffect(() => {
-  const email = window.localStorage.getItem("UserFound");
-  if (email) {
-    const user = JSON.parse(email);
-    setUser(user);
-  }
-}, []);
+
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const email = window.localStorage.getItem("UserFound");
+    if (email) {
+      const user = JSON.parse(email);
+      setUser(user);
+    }
+  }, []);
 
   const history = useHistory();
   const notify = (place) => {
@@ -54,7 +54,7 @@ useEffect(() => {
     formData.append("user", user);
 
     const res = await axios.post(
-      "http://localhost:4000/api/files/upload",
+      "https://sanucobackend.herokuapp.com/api/files/upload",
       formData,
       {
         headers: {

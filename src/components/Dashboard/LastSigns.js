@@ -39,7 +39,7 @@ export default function LastSigns() {
 
   useEffect(async () => {
     const res = await axios.get(
-      `http://localhost:4000/api/vitalSigns/lastDate/${user}`
+      `https://sanucobackend.herokuapp.com/api/vitalSigns/lastDate/${user}`
     );
     setLastSigns(res.data[0]);
   }, [lastSigns]);
@@ -72,7 +72,7 @@ export default function LastSigns() {
     formData.append("user", user);
 
     const res = await axios.post(
-      "http://localhost:4000/api/vitalSigns/createnew",
+      "https://sanucobackend.herokuapp.com/api/vitalSigns/createnew",
       formData,
       {
         headers: {

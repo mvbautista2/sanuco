@@ -12,7 +12,7 @@ const TrainingCategory = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `http://localhost:4000/api/videos/${params.category}`
+        `https://sanucobackend.herokuapp.com/api/videos/${params.category}`
       );
       setVideos(res.data);
     })();
@@ -24,19 +24,14 @@ const TrainingCategory = () => {
         <Row>
           {videos.map((video) => (
             <div className="col-md-6 p-6">
-              <div
-                className="card bg-secondary"
-                key={video._id}
-                type="submit"
-              >
-                
-                  <ReactPlayer
-                    width="500px"
-                    height="300px"
-                    controls
-                    url={video.url}
-                  />
-                
+              <div className="card bg-secondary" key={video._id} type="submit">
+                <ReactPlayer
+                  width="500px"
+                  height="300px"
+                  controls
+                  url={video.url}
+                />
+
                 <div className="card-body">
                   <h3>{video.title}</h3>
                 </div>

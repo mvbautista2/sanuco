@@ -86,7 +86,9 @@ function AdminNavbar(props) {
     const email = window.localStorage
       .getItem("UserFound")
       .replace(/['"]+/g, "");
-    const res = await axios.get(`http://localhost:4000/api/userInfo/${email}`);
+    const res = await axios.get(
+      `https://sanucobackend.herokuapp.com/api/userInfo/${email}`
+    );
     setUserInfo(res.data[0]);
   }, [userInfo]);
 
@@ -152,19 +154,17 @@ function AdminNavbar(props) {
                     "/admin/training/videos/category/entrenamiento" ||
                   location.pathname ===
                     "/admin/training/videos/category/estiramiento" ||
-                    location.pathname ===
-                    "/admin/training/videos/search/yoga" ||
-                    location.pathname ===
+                  location.pathname === "/admin/training/videos/search/yoga" ||
+                  location.pathname ===
                     "/admin/training/videos/search/cardio" ||
-                    location.pathname ===
+                  location.pathname ===
                     "/admin/training/videos/search/pilates" ||
-                    location.pathname ===
+                  location.pathname ===
                     "/admin/training/videos/search/crossfit" ||
-                    location.pathname ===
+                  location.pathname ===
                     "/admin/training/videos/search/resistencia" ||
-                    location.pathname ===
-                    "/admin/training/videos/search/bailoterapia"
-                    ? (
+                  location.pathname ===
+                    "/admin/training/videos/search/bailoterapia" ? (
                   <InputGroup className="search-bar">
                     <Button color="link" onClick={toggleModalSearchTraining}>
                       <i className="tim-icons icon-zoom-split" />

@@ -6,7 +6,7 @@ const router = Router();
 
 import File from "../models/file.js";
 
-const spacesEndpoint = new AWS.Endpoint(config.Endpoint);
+const spacesEndpoint = new AWS.Endpoint("nyc3.digitaloceanspaces.com");
 
 const s3 = new AWS.S3({
   endpoint: spacesEndpoint,
@@ -20,13 +20,13 @@ router.post("/api/files/upload", async (req, res) => {
     await s3
       .putObject({
         ACL: "public-read",
-        Bucket: config.BucketName,
+        Bucket: "sanuco",
         Body: file.data,
         Key: file.name,
       })
       .promise();
 
-    const urlFile = `https://${config.BucketName}.${config.Endpoint}/${file.name}`;
+    const urlFile = `https://sanuco.nyc3.digitaloceanspaces.com/${file.name}`;
 
     const file2 = new File({
       url: urlFile,
@@ -55,7 +55,7 @@ router.delete("/api/files/:id", async (req, res) => {
 
   await s3
     .deleteObject({
-      Bucket: config.BucketName,
+      Bucket: "sanuco",
       Key: deleteFile.key,
     })
     .promise();

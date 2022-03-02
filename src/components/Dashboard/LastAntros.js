@@ -32,7 +32,7 @@ export default function LastAntros() {
 
   useEffect(async () => {
     const res1 = await axios.get(
-      `http://localhost:4000/api/antropometric/lastDate/${user}`
+      `https://sanucobackend.herokuapp.com/api/antropometric/lastDate/${user}`
     );
 
     setLastAntro(res1.data[0]);
@@ -72,7 +72,7 @@ export default function LastAntros() {
     formData.append("user", user);
 
     const res = await axios.post(
-      "http://localhost:4000/api/antropometric/createnew",
+      "https://sanucobackend.herokuapp.com/api/antropometric/createnew",
       formData,
       {
         headers: {
@@ -274,7 +274,6 @@ export default function LastAntros() {
                           type="number"
                           placeholder="kg/m2"
                           step="0.01"
-                          
                         />
                       </FormGroup>
                     </Col>

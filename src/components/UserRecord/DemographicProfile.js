@@ -38,7 +38,7 @@ export default function DemographicProfile() {
 
   useEffect(async () => {
     const res = await axios.get(
-      `http://localhost:4000/api/demographicProfile/lastDate/${user}`
+      `https://sanucobackend.herokuapp.com/api/demographicProfile/lastDate/${user}`
     );
 
     setlastDemographic(res.data[0]);
@@ -84,7 +84,7 @@ export default function DemographicProfile() {
     formData.append("user", user);
 
     const res = await axios.post(
-      "http://localhost:4000/api/demographicProfile/createnew",
+      "https://sanucobackend.herokuapp.com/api/demographicProfile/createnew",
       formData,
       {
         headers: {

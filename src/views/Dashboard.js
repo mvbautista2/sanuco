@@ -42,7 +42,7 @@ function Dashboard(props) {
   useEffect(async () => {
     let abortController = new AbortController();
     const res = await axios.get(
-      `http://localhost:4000/api/antropometric/${user}`
+      `https://sanucobackend.herokuapp.com/api/antropometric/${user}`
     );
 
     setAntros(res.data);
@@ -54,7 +54,7 @@ function Dashboard(props) {
   useEffect(async () => {
     let abortController = new AbortController();
     const res1 = await axios.get(
-      `http://localhost:4000/api/vitalSigns/${user}`
+      `https://sanucobackend.herokuapp.com/api/vitalSigns/${user}`
     );
 
     setSigns(res1.data);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Row } from "reactstrap";
 
 const RecipesCategory = () => {
@@ -11,7 +11,7 @@ const RecipesCategory = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `http://localhost:4000/api/recipes/category/${params.category}`
+        `https://sanucobackend.herokuapp.com/api/recipes/category/${params.category}`
       );
       setRecipes(res.data);
     })();

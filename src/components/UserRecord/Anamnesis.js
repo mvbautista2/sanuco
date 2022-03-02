@@ -32,7 +32,7 @@ export default function Anamnesis() {
 
   useEffect(async () => {
     const res = await axios.get(
-      `http://localhost:4000/api/anamnesis/lastDate/${user}`
+      `https://sanucobackend.herokuapp.com/api/anamnesis/lastDate/${user}`
     );
 
     setLastAnamnesis(res.data[0]);
@@ -71,7 +71,7 @@ export default function Anamnesis() {
     formData.append("user", user);
 
     const res = await axios.post(
-      "http://localhost:4000/api/anamnesis/createnew",
+      "https://sanucobackend.herokuapp.com/api/anamnesis/createnew",
       formData,
       {
         headers: {
@@ -100,68 +100,67 @@ export default function Anamnesis() {
                   </Col>
                 </>
               ) : (
-                
-                  <Row>
-                    <Col className="pr-md-1" md="3">
-                      <FormGroup>
-                        <label>Antecendentes no patológicos</label>
-                        <Input
-                          type="textarea"
-                          placeholder="(Hábitos tóxicos, alcohol, tabaco,…)"
-                          disabled
-                          value={
-                            lastAnamnesis.antecedentesNoP === null
-                              ? "No registrado"
-                              : lastAnamnesis.antecedentesNoP
-                          }
-                        ></Input>
-                      </FormGroup>
-                    </Col>
-                    <Col className="px-md-1" md="3">
-                      <FormGroup>
-                        <label>Antecedentes Patológicos</label>
-                        <Input
-                          type="textarea"
-                          placeholder="(Enfermedades o tratornos que ha sufrido o padece)"
-                          disabled
-                          value={
-                            lastAnamnesis.antecedentesP === null
-                              ? "No registrado"
-                              : lastAnamnesis.antecedentesP
-                          }
-                        ></Input>
-                      </FormGroup>
-                    </Col>
-                    <Col className="px-md-1" md="3">
-                      <FormGroup>
-                        <label>Antecedentes Heredofamiliares</label>
-                        <Input
-                          type="textarea"
-                          placeholder="(Historial familiar de enfermedades)"
-                          disabled
-                          value={
-                            lastAnamnesis.antecedentesHeredo === null
-                              ? "No registrado"
-                              : lastAnamnesis.antecedentesHeredo
-                          }
-                        ></Input>
-                      </FormGroup>
-                    </Col>
-                    <Col className="px-md-1" md="3">
-                      <FormGroup>
-                        <label>Alergias</label>
-                        <Input
-                          type="textarea"
-                          disabled
-                          value={
-                            lastAnamnesis.alergias === null
-                              ? "No registrado"
-                              : lastAnamnesis.alergias
-                          }
-                        ></Input>
-                      </FormGroup>
-                    </Col>
-                  </Row>
+                <Row>
+                  <Col className="pr-md-1" md="3">
+                    <FormGroup>
+                      <label>Antecendentes no patológicos</label>
+                      <Input
+                        type="textarea"
+                        placeholder="(Hábitos tóxicos, alcohol, tabaco,…)"
+                        disabled
+                        value={
+                          lastAnamnesis.antecedentesNoP === null
+                            ? "No registrado"
+                            : lastAnamnesis.antecedentesNoP
+                        }
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                  <Col className="px-md-1" md="3">
+                    <FormGroup>
+                      <label>Antecedentes Patológicos</label>
+                      <Input
+                        type="textarea"
+                        placeholder="(Enfermedades o tratornos que ha sufrido o padece)"
+                        disabled
+                        value={
+                          lastAnamnesis.antecedentesP === null
+                            ? "No registrado"
+                            : lastAnamnesis.antecedentesP
+                        }
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                  <Col className="px-md-1" md="3">
+                    <FormGroup>
+                      <label>Antecedentes Heredofamiliares</label>
+                      <Input
+                        type="textarea"
+                        placeholder="(Historial familiar de enfermedades)"
+                        disabled
+                        value={
+                          lastAnamnesis.antecedentesHeredo === null
+                            ? "No registrado"
+                            : lastAnamnesis.antecedentesHeredo
+                        }
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                  <Col className="px-md-1" md="3">
+                    <FormGroup>
+                      <label>Alergias</label>
+                      <Input
+                        type="textarea"
+                        disabled
+                        value={
+                          lastAnamnesis.alergias === null
+                            ? "No registrado"
+                            : lastAnamnesis.alergias
+                        }
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                </Row>
               )}
             </CardBody>
             <CardFooter>
@@ -183,18 +182,17 @@ export default function Anamnesis() {
         <Row>
           <Col md="12">
             <Card>
-              
-                <ModalHeader>
-                  <h5 className="title">ACTUALIZAR ANAMNESIS E HISTORIAL</h5>
-                  <button
-                    aria-label="Close"
-                    className="close"
-                    onClick={closeModal}
-                  >
-                    <i className="tim-icons icon-simple-remove" />
-                  </button>
-                </ModalHeader>
-                <form onSubmit={handleSubmit}>
+              <ModalHeader>
+                <h5 className="title">ACTUALIZAR ANAMNESIS E HISTORIAL</h5>
+                <button
+                  aria-label="Close"
+                  className="close"
+                  onClick={closeModal}
+                >
+                  <i className="tim-icons icon-simple-remove" />
+                </button>
+              </ModalHeader>
+              <form onSubmit={handleSubmit}>
                 <ModalBody>
                   <Row>
                     <Col className="pr-md-1" md="12">

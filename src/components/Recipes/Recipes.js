@@ -13,7 +13,7 @@ const Recipes = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `http://localhost:4000/api/recipes/search/${params.ingredient}`
+        `https://sanucobackend.herokuapp.com/api/recipes/search/${params.ingredient}`
       );
       setRecipes(res.data);
     })();

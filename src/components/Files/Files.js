@@ -14,7 +14,9 @@ const Files = () => {
   const [user, setUser] = useState(null);
 
   useEffect(async () => {
-    const res = await axios.get(`http://localhost:4000/api/files/${user}`);
+    const res = await axios.get(
+      `https://sanucobackend.herokuapp.com/api/files/${user}`
+    );
     setFiles(res.data);
   }, [files]);
 
@@ -32,7 +34,6 @@ const Files = () => {
       setUserRole(userRole);
     }
   }, []);
-
 
   return (
     <div className="col-md-12 offset-md-1">
@@ -52,33 +53,33 @@ const Files = () => {
                     <ReactstrapNavLink href={file.url} target="_blank">
                       <i className="tim-icons icon-cloud-download-93" />
                     </ReactstrapNavLink>
-                  </td>   
+                  </td>
                   {userRole === "Paciente" && (
                     <td>
-                    <Button
-                      color="link"
-                      id="tooltip636901683"
-                      title=""
-                      type="button"
-                      onClick={async () => {
-                        const res = await axios.delete(
-                          "http://localhost:4000/api/files/" + file._id
-                        );
-                        console.log(res);
-                      }}
-                    >
-                      <i className="tim-icons icon-trash-simple" />
-                    </Button>
-                    <UncontrolledTooltip
-                      delay={0}
-                      target="tooltip636901683"
-                      placement="right"
-                    >
-                      Eliminar
-                    </UncontrolledTooltip>
-                  </td>
-                  )} 
-                  
+                      <Button
+                        color="link"
+                        id="tooltip636901683"
+                        title=""
+                        type="button"
+                        onClick={async () => {
+                          const res = await axios.delete(
+                            "https://sanucobackend.herokuapp.com/api/files/" +
+                              file._id
+                          );
+                          console.log(res);
+                        }}
+                      >
+                        <i className="tim-icons icon-trash-simple" />
+                      </Button>
+                      <UncontrolledTooltip
+                        delay={0}
+                        target="tooltip636901683"
+                        placement="right"
+                      >
+                        Eliminar
+                      </UncontrolledTooltip>
+                    </td>
+                  )}
                 </tr>
               </tbody>
             ))

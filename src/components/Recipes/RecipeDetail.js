@@ -42,7 +42,7 @@ export const RecipeDetail = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `http://localhost:4000/api/recipes/${params.id}`
+        `https://sanucobackend.herokuapp.com/api/recipes/${params.id}`
       );
       //console.log(res.data.info[0]);
       setRecipe(res.data);
@@ -116,11 +116,15 @@ export const RecipeDetail = () => {
             <div className="card-body">
               <Alert color="warning">
                 <h3 style={{ color: "white" }}>Ingredientes</h3>
-                <span style={{ whiteSpace: "pre-wrap" }}>{recipe.ingredients}</span>
+                <span style={{ whiteSpace: "pre-wrap" }}>
+                  {recipe.ingredients}
+                </span>
               </Alert>
               <Alert color="warning">
                 <h3 style={{ color: "white" }}>Instrucciones</h3>
-                <span style={{ whiteSpace: "pre-wrap" }}>{recipe.instructions}</span>
+                <span style={{ whiteSpace: "pre-wrap" }}>
+                  {recipe.instructions}
+                </span>
               </Alert>
             </div>
           </div>

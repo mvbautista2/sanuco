@@ -41,7 +41,9 @@ function UserProfile() {
     const email = window.localStorage
       .getItem("UserFound")
       .replace(/['"]+/g, "");
-    const res = await axios.get(`http://localhost:4000/api/userInfo/${email}`);
+    const res = await axios.get(
+      `https://sanucobackend.herokuapp.com/api/userInfo/${email}`
+    );
     setUserInfo(res.data[0]);
   }, [userInfo]);
 
@@ -78,7 +80,7 @@ function UserProfile() {
       formData.append("birthday", todo.birthday);
       formData.append("picture", todo.picture);
       const res = await axios.put(
-        "http://localhost:4000/api/user/" + email,
+        "https://sanucobackend.herokuapp.com/api/user/" + email,
         formData,
         {
           headers: {
@@ -307,11 +309,11 @@ function UserProfile() {
                           onChange={(e) =>
                             setTodo({
                               ...todo,
-                              birthday : new Date(e.target.value)
+                              birthday: new Date(e.target.value),
                             })
                           }
                         ></Input>
-                        
+
                         {/* <Input
                           type="date"
                           defaultValue={new Date(todo.birthday).toLocaleDateString()}

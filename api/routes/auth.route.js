@@ -1,6 +1,5 @@
 import { Router } from "express";
 import User from "../models/user.js";
-import { transporter } from "../middlewares/mailer.js";
 import pkg from "jsonwebtoken";
 const { jwt } = pkg;
 import { OAuth2Client } from "google-auth-library";
