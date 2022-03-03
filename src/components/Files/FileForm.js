@@ -54,7 +54,7 @@ const FileForm = () => {
     formData.append("user", user);
 
     const res = await axios.post(
-      "https://sanuco.herokuapp.com/api/files/upload",
+      "https://sanuco-back-end-uxuex.ondigitalocean.app/api/files/upload",
       formData,
       {
         headers: {

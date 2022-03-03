@@ -81,7 +81,7 @@ router.post(
     const token = pkg.sign({ id: userFound._id }, config.SECRET, {
       expiresIn: 86400, //24 horas
     });
-    res.status(200).json({ token, userFound });   
+    res.status(200).json({ token, userFound });
 
     // try {
     //   verificationLink = `http:localhost:3000/admin/verify/${token}`;
@@ -109,7 +109,7 @@ router.post("/api/googlelogin", async (req, res) => {
     .verifyIdToken({
       idToken: tokenId,
       audience:
-        "362449996279-6tog3bo75fspopbn3dhf3fmjrt8s4lik.apps.googleusercontent.com",
+        "362449996279-o26kfjva5j08i2dbjn38rvobinl4ndru.apps.googleusercontent.com",
     })
     .then(async (response) => {
       const { email_verified, email, given_name, family_name, picture } =

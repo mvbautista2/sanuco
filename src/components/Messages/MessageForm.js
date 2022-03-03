@@ -1,18 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
-import { Button, Input } from "reactstrap";
+import {
+  Button,
+  Input,
+  Modal,
+  ModalFooter,
+  ModalHeader,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+} from "reactstrap";
+import Popup from "reactjs-popup";
+import SignaturePad from "react-signature-canvas";
 
 const MessageForm = () => {
   const [message, setMessage] = useState();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [imageURL, setImageURL] = useState(null);
   const [nutricionista, setNutricionista] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
-
+  const [agregarFirma, setagregarFirma] = useState(false);
+  const sigCanvas = useRef({});
+  const limpiar = () => sigCanvas.current.clear();
+  const guardar = () => {
+    setImageURL(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
+    closeModal();
+  };
   useEffect(() => {
     const email = window.localStorage.getItem("UserFound");
     if (email) {
@@ -28,6 +46,13 @@ const MessageForm = () => {
       setNutricionista(email);
     }
   }, []);
+
+  const openModal = () => {
+    setagregarFirma(true);
+  };
+  const closeModal = () => {
+    setagregarFirma(false);
+  };
 
   const history = useHistory();
   const notify = (place) => {
@@ -58,11 +83,13 @@ const MessageForm = () => {
 
     formData.append("content", content);
     formData.append("title", title);
+    console.log(imageURL);
+    formData.append("imageURL", imageURL);
     formData.append("user", user);
     formData.append("nutricionista", nutricionista);
 
     const res = await axios.post(
-      "https://sanuco.herokuapp.com/api/messages/createnew",
+      "https://sanuco-back-end-uxuex.ondigitalocean.app/api/messages/createnew",
       formData,
       {
         headers: {
@@ -107,6 +134,46 @@ const MessageForm = () => {
               placeholder="Escribe tu mensaje aquí"
               onChange={(e) => setContent(e.target.value)}
             />
+            <img src={imageURL}></img>
+            <Button
+              class="btn btn-primary btn-round"
+              color="primary"
+              onClick={openModal}
+            >
+              + Agregar Firma
+            </Button>
+            <Modal isOpen={agregarFirma}>
+              <ModalHeader>
+                <CardTitle tag="h4">Agrega tu firma en el mensaje</CardTitle>
+                <button
+                  aria-label="Close"
+                  className="close"
+                  onClick={closeModal}
+                >
+                  <i className="tim-icons icon-simple-remove" />
+                </button>
+              </ModalHeader>
+              <>
+                <SignaturePad ref={sigCanvas} />
+              </>
+              <CardFooter>
+                <button
+                  aria-label="Reiniciar"
+                  className="close"
+                  onClick={limpiar}
+                >
+                  <i className="tim-icons icon-refresh-01" />
+                </button>
+                <button
+                  aria-label="Guardar"
+                  className="close"
+                  onClick={guardar}
+                >
+                  <i className="tim-icons icon-upload" />
+                </button>
+              </CardFooter>
+            </Modal>
+
             <div className="my-3">
               <Button className="btn btn-fill w-100" color="primary">
                 Enviar

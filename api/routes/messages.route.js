@@ -4,12 +4,13 @@ import Messages from "../models/message.js";
 const router = Router();
 
 router.post("/api/messages/createnew", async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, imageURL } = req.body;
 
   try {
     const message = new Messages({
       title,
       content,
+      imageURL,
       nutricionista: req.body.nutricionista,
       user: req.body.user,
     });

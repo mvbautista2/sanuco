@@ -141,7 +141,8 @@ export default function LoginForm() {
       console.log(email);
 
       const res = await axios.put(
-        "https://sanuco.herokuapp.com/api/auth/user/" + email,
+        "https://sanuco-back-end-uxuex.ondigitalocean.app/api/auth/user/" +
+          email,
         formData,
         {
           headers: {
@@ -192,7 +193,7 @@ export default function LoginForm() {
         formData.append("role", role);
         emailVerification();
         const res = await axios.post(
-          "https://sanuco.herokuapp.com/api/auth/signup",
+          "https://sanuco-back-end-uxuex.ondigitalocean.app/api/auth/signup",
           formData,
           {
             headers: {
@@ -234,7 +235,7 @@ export default function LoginForm() {
         formData.append("password", password);
 
         const res = await axios.post(
-          "https://sanuco.herokuapp.com/api/auth/signin",
+          "https://sanuco-back-end-uxuex.ondigitalocean.app/api/auth/signin",
           formData,
           {
             headers: {
@@ -281,7 +282,7 @@ export default function LoginForm() {
     console.log(res);
     axios({
       method: "POST",
-      url: "https://sanuco.herokuapp.com/api/verifyEmail",
+      url: "https://sanuco-back-end-uxuex.ondigitalocean.app/api/verifyEmail",
       data: { email, api_key: hunter },
     }).then((res) => {
       console.log("El resultado", res);
@@ -291,7 +292,7 @@ export default function LoginForm() {
     console.log(res);
     axios({
       method: "POST",
-      url: "https://sanuco.herokuapp.com/api/facebooklogin",
+      url: "https://sanuco-back-end-uxuex.ondigitalocean.app/api/facebooklogin",
       data: { accessToken: res.accessToken, userID: res.userID },
     })
       .then((res) => {
@@ -338,7 +339,7 @@ export default function LoginForm() {
     console.log(res);
     axios({
       method: "POST",
-      url: "https://sanuco.herokuapp.com/api/googlelogin",
+      url: "https://sanuco-back-end-uxuex.ondigitalocean.app/api/googlelogin",
       data: { tokenId: res.tokenId },
     })
       .then((res) => {
@@ -387,7 +388,7 @@ export default function LoginForm() {
   const listarUsuarios = () => {
     axios({
       method: "GET",
-      url: "https://sanuco.herokuapp.com/api/users/Paciente",
+      url: "https://sanuco-back-end-uxuex.ondigitalocean.app/api/users/Paciente",
       headers: {
         token: window.localStorage
           .getItem("LoggedNotAppUser")
@@ -553,7 +554,7 @@ export default function LoginForm() {
               <Button className="btn-fill" color="primary" type="submit">
                 {isSignUp ? "Guardar" : "Continuar"}
               </Button>
-              <FacebookLogin
+              {/* <FacebookLogin
                 appId="1037374753711484"
                 autoLoad={false}
                 callback={responseFacebook}
@@ -566,9 +567,9 @@ export default function LoginForm() {
                     Iniciar Sesión con Facebook
                   </Button>
                 )}
-              />
+              /> */}
               <GoogleLogin
-                clientId="362449996279-6tog3bo75fspopbn3dhf3fmjrt8s4lik.apps.googleusercontent.com"
+                clientId="362449996279-o26kfjva5j08i2dbjn38rvobinl4ndru.apps.googleusercontent.com"
                 buttonText="Iniciar Sesión con Google"
                 onSuccess={googleSuccess}
                 onFailure={googleFailure}

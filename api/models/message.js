@@ -7,6 +7,7 @@ const MessagesSchema = new Schema(
     user: String,
     title: String,
     content: String,
+    imageURL: String,
   },
   {
     timestamps: true,

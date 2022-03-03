@@ -12,7 +12,7 @@ const TrainingCategory = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `https://sanuco.herokuapp.com/api/videos/${params.category}`
+        `https://sanuco-back-end-uxuex.ondigitalocean.app/api/videos/${params.category}`
       );
       setVideos(res.data);
     })();

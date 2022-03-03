@@ -11,7 +11,7 @@ export default function Videos() {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `https://sanuco.herokuapp.com/api/videos/search/${params.type}`
+        `https://sanuco-back-end-uxuex.ondigitalocean.app/api/videos/search/${params.type}`
       );
       setVideos(res.data);
     })();

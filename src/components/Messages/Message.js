@@ -38,7 +38,7 @@ const Message = () => {
 
   useEffect(async () => {
     const res = await axios.get(
-      `https://sanuco.herokuapp.com/api/messages/${user}`
+      `https://sanuco-back-end-uxuex.ondigitalocean.app/api/messages/${user}`
     );
     setMessages(res.data);
   }, [messages]);
@@ -62,6 +62,7 @@ const Message = () => {
               <td>
                 <p className="title">{message.title}</p>
                 <p className="text-muted">{message.content}</p>
+                <img src={message.imageURL}></img>
               </td>
               {userRole === "Nutricionista" && (
                 <td className="td-actions text-right">
@@ -72,7 +73,7 @@ const Message = () => {
                     type="button"
                     onClick={async () => {
                       const res = await axios.delete(
-                        "https://sanuco.herokuapp.com/api/messages/" +
+                        "https://sanuco-back-end-uxuex.ondigitalocean.app/api/messages/" +
                           message._id
                       );
                       console.log(res);

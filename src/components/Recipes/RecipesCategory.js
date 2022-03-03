@@ -11,7 +11,7 @@ const RecipesCategory = () => {
   useEffect(() => {
     (async () => {
       const res = await axios.get(
-        `https://sanuco.herokuapp.com/api/recipes/category/${params.category}`
+        `https://sanuco-back-end-uxuex.ondigitalocean.app/api/recipes/category/${params.category}`
       );
       setRecipes(res.data);
     })();

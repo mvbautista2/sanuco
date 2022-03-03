@@ -42,7 +42,7 @@ function UserProfile() {
       .getItem("UserFound")
       .replace(/['"]+/g, "");
     const res = await axios.get(
-      `https://sanuco.herokuapp.com/api/userInfo/${email}`
+      `https://sanuco-back-end-uxuex.ondigitalocean.app/api/userInfo/${email}`
     );
     setUserInfo(res.data[0]);
   }, [userInfo]);
@@ -80,7 +80,7 @@ function UserProfile() {
       formData.append("birthday", todo.birthday);
       formData.append("picture", todo.picture);
       const res = await axios.put(
-        "https://sanuco.herokuapp.com/api/user/" + email,
+        "https://sanuco-back-end-uxuex.ondigitalocean.app/api/user/" + email,
         formData,
         {
           headers: {
